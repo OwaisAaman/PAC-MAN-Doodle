@@ -1,36 +1,38 @@
 #include <iostream>
 #include <vector>
-#include "header_text.h"
-#include "functions.h"
+#include "headerText.h"
+#include "myScreen.h"
+#include <SFML/Audio.hpp>
+#include "myApplication.h"
 
 int main(){
 
-    sf::RenderWindow window;
-    cfg_window(window, 1080, 720);
+    myApplication app;
+    app.appInit();
+    app.setCurrentScreenType("welcome");
+    sf::SoundBuffer intro_buffer;
+    if(!intro_buffer.loadFromFile("../assets/sounds/pacman_beginning.wav")){
+        std::cout << "intro sound buffer not loaded" << std::endl;
+    }
+
+    sf::Sound intro_sound;
+    intro_sound.setBuffer(intro_buffer);
+    intro_sound.play();
+    intro_sound.setLoop(true);
     
-    sf::Font pac_font;
-    if (!pac_font.loadFromFile("../assets/fonts/PAC-FONT.TTF")){
-        std::cout << "Font loading failed" << std::endl;
-    }
-
-    sf::Font basic_font;
-    if (!basic_font.loadFromFile("../assets/fonts/joystix.ttf")){
-        std::cout << "Font loading failed" << std::endl;
-    }
-
-    while (window.isOpen()){
+    while (app.getWindow().isOpen()){
         sf::Event event;
-        while (window.pollEvent(event)){
+        while (app.getWindow().pollEvent(event)){
             if (event.type == sf::Event::Closed){
-                window.close();
+                app.getWindow().close();
+                intro_sound.stop();
             }
         }
-        window.clear();
-        draw_text(pac_font, basic_font, window);
-        window.display();
-
+        app.getWindow().clear();
+        app.updateView();
+        app.getCurrentScreen().updateScreen(app);
+        app.drawScreen();
+        app.getWindow().display();
     }
-
-
     return 0;
 }
