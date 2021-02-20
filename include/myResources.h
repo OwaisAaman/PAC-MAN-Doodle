@@ -11,6 +11,7 @@ class myResources{
         sf::Texture welcome_texture_;
         sf::Texture end_texture_;
         sf::Texture game_texture_;
+        sf::Texture pacman_right_1_;
         sf::SoundBuffer welcome_sound_buff_;
         sf::SoundBuffer end_sound_buff_;
         sf::SoundBuffer eat_sound_buff_;

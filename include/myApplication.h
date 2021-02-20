@@ -6,12 +6,14 @@
 #include "myScreen.h"
 #include "myResources.h"
 #include <vector>
+#include "tileMap.h"
 
 
 //not using a std::map container as that would require keeping a track of all the keys. 
 //Even if the pre-known keys are added in the comments for referencing, it is possible that a new key might be 
 //filled and might get lost and would require going through the entire code to search for the keys.
 
+//class tileMap;
 
 class myApplication {
     private:
@@ -26,6 +28,8 @@ class myApplication {
         myScreen welcome_screen_;
         myScreen game_screen_;
         myScreen end_screen_;
+        tileMap map_0_;
+        tileMap map_1_;
     public:
         myApplication();
         void appInit(const int, const int);
@@ -33,6 +37,8 @@ class myApplication {
         void configureWindow(const int, const int);
         void loadScreen(const std::string&);
         void loadAllScreens();
+        void loadMap(tileMap&, const std::string&, sf::Vector2u, const int, const int, myApplication&);
+        void loadAllMaps();
         void updateView();
         void drawScreen();
         void updateWindowOrigin();
@@ -49,6 +55,7 @@ class myApplication {
         int getDefaultWindowHeight();
         int getDefaultWindowWidth();
         const std::vector <int>& getLevel();
+        tileMap& getMap(const std::string&);
 };
 
 

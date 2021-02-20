@@ -21,6 +21,7 @@ void myResources::loadTexture(sf::Texture& texture_name, const std::string& file
 void myResources::loadAllTextures(){
     loadTexture(welcome_texture_, "../assets/sprites/screens/welcome.jpg");
     loadTexture(end_texture_, "../assets/sprites/screens/end.jpg");
+    loadTexture(pacman_right_1_, "../assets/sprites/pacman-right/1.png");
 }
 
 void myResources::loadAudio(sf::SoundBuffer& buffer_name, const std::string& file_path){
@@ -92,6 +93,9 @@ sf::Texture& myResources::getTexture(const std::string& texture_name){
     }
     else if (texture_name == "end_texture"){
         return end_texture_;
+    }
+    else if (texture_name == "pacman_right_1"){
+        return pacman_right_1_;
     }
 }
 

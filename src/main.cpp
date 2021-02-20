@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 #include "myApplication.h"
 #include "tileMap.h"
+#include "pacMan.h"
 
 
 int main(){
@@ -15,6 +16,8 @@ int main(){
     app.setCurrentScreenType("end");
     my_wire_frame.loadWireFrame(sf::Vector2u(28, 28) , 25, 29, app);
     my_map.loadMap("level 1", sf::Vector2u(28, 28) , 25, 29, app);
+    //pacMan paccy(app);
+    movable paccy(app, "pacman_right_1");
 
     sf::SoundBuffer intro_buffer;
     if(!intro_buffer.loadFromFile("../assets/sounds/pacman_beginning.wav")){
@@ -38,8 +41,9 @@ int main(){
         app.updateView();
         app.getCurrentScreen().updateScreen(app);
         //app.drawScreen();
-        app.getWindow().draw(my_wire_frame.getTileMap());
-        app.getWindow().draw(my_map.getTileMap());
+        app.getWindow().draw(my_wire_frame.getVertexMap());
+        app.getWindow().draw(my_map.getVertexMap());
+        app.getWindow().draw(paccy.getSprite());
         app.getWindow().display();
     }
     return 0;
