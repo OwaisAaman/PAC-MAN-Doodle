@@ -40,6 +40,7 @@ void myScreen::setText(headerText& text_row, const std::string& text, const int 
 void myScreen::setSprite(sf::Texture& texture, const float scale_x, const float scale_y){
     sf::Vector2f pre_scale = {scale_x * 1080 / texture.getSize().x, scale_y * 720 / texture.getSize().y};
     sprite_.setScale(1, 1);
+    texture.setSmooth(true);
     sprite_.setTexture(texture);
     sprite_.setOrigin(sprite_.getGlobalBounds().width / 2, sprite_.getGlobalBounds().height / 2);
     sprite_.scale(pre_scale);

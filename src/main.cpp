@@ -4,12 +4,18 @@
 #include "myScreen.h"
 #include <SFML/Audio.hpp>
 #include "myApplication.h"
+#include "tileMap.h"
+
 
 int main(){
 
     myApplication app;
-    app.appInit();
-    app.setCurrentScreenType("welcome");
+    tileMap my_wire_frame, my_map;
+    app.appInit(1200, 900);
+    app.setCurrentScreenType("end");
+    my_wire_frame.loadWireFrame(sf::Vector2u(28, 28) , 25, 29, app);
+    my_map.loadMap("level 1", sf::Vector2u(28, 28) , 25, 29, app);
+
     sf::SoundBuffer intro_buffer;
     if(!intro_buffer.loadFromFile("../assets/sounds/pacman_beginning.wav")){
         std::cout << "intro sound buffer not loaded" << std::endl;
@@ -31,7 +37,9 @@ int main(){
         app.getWindow().clear();
         app.updateView();
         app.getCurrentScreen().updateScreen(app);
-        app.drawScreen();
+        //app.drawScreen();
+        app.getWindow().draw(my_wire_frame.getTileMap());
+        app.getWindow().draw(my_map.getTileMap());
         app.getWindow().display();
     }
     return 0;

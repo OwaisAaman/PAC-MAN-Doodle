@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "myScreen.h"
+#include "myResources.h"
 #include <vector>
 
 
@@ -15,31 +16,20 @@
 class myApplication {
     private:
         sf::RenderWindow window_;
+        int default_window_width_;
+        int default_window_height_;
         sf::VideoMode videomode_;
         sf::Vector2f window_origin_;
-        sf::Font pac_font_;
-        sf::Font regular_font_;
-        sf::Texture welcome_texture_;
-        sf::Texture end_texture_;
-        sf::Texture game_texture_;
-        sf::SoundBuffer welcome_sound_buff_;
-        sf::SoundBuffer end_sound_buff_;
-        sf::SoundBuffer eat_sound_buff_;
-        sf::SoundBuffer die_sound_buff_;
         sf::View view_;
         std::string current_screen_type_;
+        myResources resources_;
         myScreen welcome_screen_;
         myScreen game_screen_;
         myScreen end_screen_;
     public:
         myApplication();
-        void appInit();
-        void loadFont(sf::Font&, const std::string&);
-        void loadAllFonts();
-        void loadTexture(sf::Texture&, const std::string&);
-        void loadAllTextures();
-        void loadAudio(sf::SoundBuffer&, const std::string&);
-        void loadAllAudio();
+        void appInit(const int, const int);
+        void setDefaultWindow(const int, const int);
         void configureWindow(const int, const int);
         void loadScreen(const std::string&);
         void loadAllScreens();
@@ -56,6 +46,9 @@ class myApplication {
         sf::VideoMode& getVideoMode();
         myScreen& getCurrentScreen();
         sf::Vector2f& getWindowOrigin();
+        int getDefaultWindowHeight();
+        int getDefaultWindowWidth();
+        const std::vector <int>& getLevel();
 };
 
 
