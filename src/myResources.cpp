@@ -26,6 +26,11 @@ void myResources::loadAllTextures(){
     loadTexture(pacman_up_1_, "../assets/sprites/pacman-up/1.png");
     loadTexture(pacman_down_1_, "../assets/sprites/pacman-down/1.png");
     loadTexture(pacman_left_1_, "../assets/sprites/pacman-left/1.png");
+    loadTexture(ghost_blinky_, "../assets/sprites/ghosts/blinky.png");
+    loadTexture(ghost_blue_ghost_, "../assets/sprites/ghosts/blue_ghost.png");
+    loadTexture(ghost_clyde_, "../assets/sprites/ghosts/clyde.png");
+    loadTexture(ghost_inky_, "../assets/sprites/ghosts/inky.png");
+    loadTexture(ghost_pinky_, "../assets/sprites/ghosts/pinky.png");
 }
 
 void myResources::loadAudio(sf::SoundBuffer& buffer_name, const std::string& file_path){
@@ -109,6 +114,21 @@ sf::Texture& myResources::getTexture(const std::string& texture_name){
     }
     else if (texture_name == "pacman_down_1"){
         return pacman_down_1_;
+    }
+    else if (texture_name == "ghost_blinky"){
+        return ghost_blinky_;
+    }
+    else if (texture_name == "ghost_blue_ghost"){
+        return ghost_blue_ghost_;
+    }
+    else if (texture_name == "ghost_clyde"){
+        return ghost_clyde_;
+    }
+    else if (texture_name == "ghost_inky"){
+        return ghost_inky_;
+    }
+    else if (texture_name == "ghost_pinky"){
+        return ghost_pinky_;
     }
 }
 

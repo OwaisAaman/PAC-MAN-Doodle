@@ -15,6 +15,11 @@ class myResources{
         sf::Texture pacman_left_1_;
         sf::Texture pacman_up_1_;
         sf::Texture pacman_down_1_;
+        sf::Texture ghost_blinky_;
+        sf::Texture ghost_blue_ghost_;
+        sf::Texture ghost_clyde_;
+        sf::Texture ghost_inky_;
+        sf::Texture ghost_pinky_;
         sf::SoundBuffer welcome_sound_buff_;
         sf::SoundBuffer end_sound_buff_;
         sf::SoundBuffer eat_sound_buff_;

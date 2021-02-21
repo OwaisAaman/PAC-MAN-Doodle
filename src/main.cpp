@@ -6,6 +6,7 @@
 #include "myApplication.h"
 #include "tileMap.h"
 #include "pacMan.h"
+#include "arena.h"
 
 
 int main(){
@@ -16,8 +17,12 @@ int main(){
     app.setCurrentScreenType("end");
     my_wire_frame.loadWireFrame(sf::Vector2u(28, 28) , 25, 29, app);
     my_map.loadMap("level 1", sf::Vector2u(28, 28) , 25, 29, app);
-    pacMan paccy(app);
+    //pacMan paccy(app);
     //movable paccy(app, "pacman_right_1");
+    arena my_arena;
+    my_arena.loadAll(app);
+    pacMan& paccy = my_arena.getPacMan();
+
 
     sf::SoundBuffer intro_buffer;
     if(!intro_buffer.loadFromFile("../assets/sounds/pacman_beginning.wav")){
@@ -65,14 +70,16 @@ int main(){
                 paccy.killVelocity("Right");
             }
         }
-        paccy.move();
+        //paccy.move();
+        my_arena.moveAll();
         app.getWindow().clear();
         app.updateView();
         app.getCurrentScreen().updateScreen(app);
         //app.drawScreen();
         app.getWindow().draw(my_wire_frame.getVertexMap());
         app.getWindow().draw(my_map.getVertexMap());
-        app.getWindow().draw(paccy.getSprite());
+        my_arena.drawAll(app);
+        //app.getWindow().draw(paccy.getSprite());
         app.getWindow().display();
     }
     return 0;

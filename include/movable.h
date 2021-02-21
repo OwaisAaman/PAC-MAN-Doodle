@@ -16,6 +16,7 @@ class movable{
         bool up_velocity_;
         bool down_velocity_;
     public:
+        movable();
         movable(myApplication&, const std::string&, const std::string&);
         void move();
         void setMap(myApplication&, const std::string&);

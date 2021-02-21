@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <iostream>
 
+movable::movable(){}
+
 movable::movable(myApplication& app, const std::string& texture_name, const std::string& level_name){
     std::vector <int> level = app.getLevel();
     std::vector <int> open_points;

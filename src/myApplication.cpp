@@ -50,7 +50,7 @@ void myApplication::configureWindow(const int screen_width, const int screen_hei
     videomode_.width = screen_width;
     videomode_.height = screen_height;
     window_.create(videomode_, "PAC-MAN");
-    window_.setFramerateLimit(15);
+    window_.setFramerateLimit(10);
 }
 
 void myApplication::updateView(){

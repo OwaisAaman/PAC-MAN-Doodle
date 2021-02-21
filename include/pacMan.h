@@ -8,6 +8,7 @@ class pacMan : public movable{
     private :
         long long score_;
     public :
+        pacMan();
         pacMan(myApplication& app);
         void updateScore();
         const long long getScore();
