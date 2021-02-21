@@ -36,12 +36,12 @@ void tileMap::loadMap(const std::string& level_name, sf::Vector2u tile_size, con
         tile_size_ = tile_size;
         num_tiles_ = sf::Vector2u(x_tiles, y_tiles);
 
-        std::vector <int> level = app.getLevel();
+        setLevel(app.getLevel());
         int curr_index;
         for (int i = 0; i < y_tiles; i++){
             for (int j = 0; j < x_tiles; j++){
                 curr_index = i * x_tiles + j;
-                if (level[curr_index] == 1){
+                if (level_[curr_index] == 1){
                     sf::Vertex* quad = &vertices_[curr_index * 4];
                     quad[0].position = sf::Vector2f((w_offset_ / 2 + j * tile_size.x), (h_offset_ / 2 + i * tile_size.y));
                     quad[1].position = sf::Vector2f((w_offset_ / 2 + (j + 1) * tile_size.x), (h_offset_ / 2 + i * tile_size.y));
@@ -57,6 +57,10 @@ void tileMap::loadMap(const std::string& level_name, sf::Vector2u tile_size, con
         }
     }
 
+}
+\
+void tileMap::setLevel(std::vector <int>& level){
+    this->level_ = level;
 }
 
 sf::VertexArray& tileMap::getVertexMap(){
@@ -76,4 +80,8 @@ sf::Vector2u tileMap::getTileSize(){
 
 sf::Vector2u tileMap::getNumTiles(){
     return num_tiles_;
+}
+
+std::vector <int>& tileMap::getLevel(){
+    return level_;
 }

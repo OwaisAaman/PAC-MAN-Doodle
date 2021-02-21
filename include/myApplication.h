@@ -54,7 +54,7 @@ class myApplication {
         sf::Vector2f& getWindowOrigin();
         int getDefaultWindowHeight();
         int getDefaultWindowWidth();
-        const std::vector <int>& getLevel();
+        std::vector <int>& getLevel();
         tileMap& getMap(const std::string&);
 };
 

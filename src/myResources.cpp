@@ -16,12 +16,16 @@ void myResources::loadTexture(sf::Texture& texture_name, const std::string& file
     if (!texture_name.loadFromFile(file_path)){
             std::cout << "Texture loading failed from " << file_path << std::endl;
     }
+    texture_name.setSmooth(true);
 }
 
 void myResources::loadAllTextures(){
     loadTexture(welcome_texture_, "../assets/sprites/screens/welcome.jpg");
     loadTexture(end_texture_, "../assets/sprites/screens/end.jpg");
     loadTexture(pacman_right_1_, "../assets/sprites/pacman-right/1.png");
+    loadTexture(pacman_up_1_, "../assets/sprites/pacman-up/1.png");
+    loadTexture(pacman_down_1_, "../assets/sprites/pacman-down/1.png");
+    loadTexture(pacman_left_1_, "../assets/sprites/pacman-left/1.png");
 }
 
 void myResources::loadAudio(sf::SoundBuffer& buffer_name, const std::string& file_path){
@@ -73,7 +77,7 @@ void myResources::loadLevel(){
                 1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1};
 }
 
-const std::vector <int>& myResources::getLevel(){
+std::vector <int>& myResources::getLevel(){
     return level_1_;
 }
 
@@ -96,6 +100,15 @@ sf::Texture& myResources::getTexture(const std::string& texture_name){
     }
     else if (texture_name == "pacman_right_1"){
         return pacman_right_1_;
+    }
+    else if (texture_name == "pacman_up_1"){
+        return pacman_up_1_;
+    }
+    else if (texture_name == "pacman_left_1"){
+        return pacman_left_1_;
+    }
+    else if (texture_name == "pacman_down_1"){
+        return pacman_down_1_;
     }
 }
 

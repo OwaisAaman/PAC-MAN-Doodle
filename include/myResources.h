@@ -12,6 +12,9 @@ class myResources{
         sf::Texture end_texture_;
         sf::Texture game_texture_;
         sf::Texture pacman_right_1_;
+        sf::Texture pacman_left_1_;
+        sf::Texture pacman_up_1_;
+        sf::Texture pacman_down_1_;
         sf::SoundBuffer welcome_sound_buff_;
         sf::SoundBuffer end_sound_buff_;
         sf::SoundBuffer eat_sound_buff_;
@@ -25,7 +28,7 @@ class myResources{
         void loadAudio(sf::SoundBuffer&, const std::string&);
         void loadAllAudio();
         void loadLevel();
-        const std::vector <int>& getLevel();
+        std::vector <int>& getLevel();
         sf::Font& getFont(const std::string&);
         sf::Texture& getTexture(const std::string&);
         sf::SoundBuffer& getAudio(const std::string&);

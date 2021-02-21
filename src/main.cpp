@@ -16,8 +16,8 @@ int main(){
     app.setCurrentScreenType("end");
     my_wire_frame.loadWireFrame(sf::Vector2u(28, 28) , 25, 29, app);
     my_map.loadMap("level 1", sf::Vector2u(28, 28) , 25, 29, app);
-    //pacMan paccy(app);
-    movable paccy(app, "pacman_right_1");
+    pacMan paccy(app);
+    //movable paccy(app, "pacman_right_1");
 
     sf::SoundBuffer intro_buffer;
     if(!intro_buffer.loadFromFile("../assets/sounds/pacman_beginning.wav")){
@@ -36,7 +36,36 @@ int main(){
                 app.getWindow().close();
                 intro_sound.stop();
             }
+            else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up){
+                paccy.setVelocity("Up");
+                paccy.setTexture(app, "pacman_up_1");
+            }
+            else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down){
+                paccy.setVelocity("Down");
+                paccy.setTexture(app, "pacman_down_1");
+            }
+            else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
+                paccy.setVelocity("Right");
+                paccy.setTexture(app, "pacman_right_1");
+            }
+            else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
+                paccy.setVelocity("Left");
+                paccy.setTexture(app, "pacman_left_1");
+            }
+            else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up){
+                paccy.killVelocity("Up");
+            }
+            else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Down){
+                paccy.killVelocity("Down");
+            }
+            else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left){
+                paccy.killVelocity("Left");
+            }
+            else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right){
+                paccy.killVelocity("Right");
+            }
         }
+        paccy.move();
         app.getWindow().clear();
         app.updateView();
         app.getCurrentScreen().updateScreen(app);

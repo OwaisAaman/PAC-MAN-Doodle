@@ -50,7 +50,7 @@ void myApplication::configureWindow(const int screen_width, const int screen_hei
     videomode_.width = screen_width;
     videomode_.height = screen_height;
     window_.create(videomode_, "PAC-MAN");
-    window_.setFramerateLimit(60);
+    window_.setFramerateLimit(15);
 }
 
 void myApplication::updateView(){
@@ -120,7 +120,7 @@ int myApplication::getDefaultWindowHeight(){
     return default_window_height_;
 }
 
-const std::vector <int>& myApplication::getLevel(){
+std::vector <int>& myApplication::getLevel(){
     return resources_.getLevel();
 }
 

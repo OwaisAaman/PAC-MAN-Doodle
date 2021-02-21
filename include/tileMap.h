@@ -16,6 +16,7 @@ class tileMap{
         sf::Vector2u num_tiles_;
         double h_offset_;  //horizontal offset for rendering the tilemap on the window
         double w_offset_;  //vertical offset for rendering the tilemap on the window
+        std::vector <int> level_;
 
     public:
         tileMap();
@@ -28,6 +29,8 @@ class tileMap{
         double getWOffset();
         sf::Vector2u getTileSize();
         sf::Vector2u getNumTiles();
+        void setLevel(std::vector <int>&);
+        std::vector <int>& getLevel();
 };
 
 #endif //TILE_MAP_H
