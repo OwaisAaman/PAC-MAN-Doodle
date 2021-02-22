@@ -38,8 +38,8 @@ void myApplication::loadMap(tileMap& map_name, const std::string& level_name, sf
 }
 
 void myApplication::loadAllMaps(){
-    loadMap(map_0_, "wire-frame", sf::Vector2u(28, 28) , 25, 29, *this);
-    loadMap(map_1_, "level_1", sf::Vector2u(28, 28) , 25, 29, *this);
+    loadMap(map_0_, "wire-frame", sf::Vector2u(32, 32) , 20, 25, *this);   //do not hard-code here
+    loadMap(map_1_, "level_1", sf::Vector2u(32, 32) , 20, 25, *this);      //do not hard-code here
 }
 
 void myApplication::setCurrentScreenType(const std::string& type){

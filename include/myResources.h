@@ -20,6 +20,8 @@ class myResources{
         sf::Texture ghost_clyde_;
         sf::Texture ghost_inky_;
         sf::Texture ghost_pinky_;
+        sf::Texture food_dot_;
+        sf::Texture game_;
         sf::SoundBuffer welcome_sound_buff_;
         sf::SoundBuffer end_sound_buff_;
         sf::SoundBuffer eat_sound_buff_;

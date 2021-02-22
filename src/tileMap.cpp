@@ -1,7 +1,8 @@
 #include "tileMap.h"
 #include "myApplication.h"
+#include <iostream>
 
-tileMap::tileMap(){
+tileMap::tileMap() {
     h_offset_ = 0;
     w_offset_ = 0;
 }
@@ -11,6 +12,8 @@ void tileMap::loadWireFrame(sf::Vector2u tile_size, const int x_tiles, const int
     tile_size_ = tile_size;
     h_offset_ = app.getDefaultWindowHeight() - y_tiles * tile_size.y;
     w_offset_ = app.getDefaultWindowWidth() - x_tiles * tile_size.x;
+    //std::cout << "wire" << y_tiles << " " << x_tiles << std::endl;
+    //std::cout << "wire" << h_offset_ << " " << w_offset_ << std::endl;
     num_tiles_ = sf::Vector2u(x_tiles, y_tiles);
     vertices_.setPrimitiveType(sf::Points);
     vertices_.resize(x_tiles * y_tiles);
@@ -31,10 +34,12 @@ void tileMap::loadMap(const std::string& level_name, sf::Vector2u tile_size, con
         level_name_ = level_name;
         h_offset_ = app.getDefaultWindowHeight() - y_tiles * tile_size.y;
         w_offset_ = app.getDefaultWindowWidth() - x_tiles * tile_size.x;
+        //std::cout << "map" << h_offset_ << " " << w_offset_ << std::endl;
         vertices_.setPrimitiveType(sf::Quads);
         vertices_.resize(x_tiles * y_tiles * 4);
         tile_size_ = tile_size;
         num_tiles_ = sf::Vector2u(x_tiles, y_tiles);
+        tile_texture_ = app.getTexture("game");
 
         setLevel(app.getLevel());
         int curr_index;
@@ -48,17 +53,48 @@ void tileMap::loadMap(const std::string& level_name, sf::Vector2u tile_size, con
                     quad[2].position = sf::Vector2f((w_offset_ / 2 + (j + 1) * tile_size.x), (h_offset_ / 2 + (i + 1) * tile_size.y));
                     quad[3].position = sf::Vector2f((w_offset_ / 2 + j * tile_size.x), (h_offset_ / 2 + (i + 1) * tile_size.y));
 
-                    quad[1].color = sf::Color::Yellow;
-                    quad[1].color = sf::Color::Yellow;
-                    quad[2].color = sf::Color::Yellow;
-                    quad[3].color = sf::Color::Yellow;
+                    quad[0].color = sf::Color::Red;
+                    //quad[1].color = sf::Color::Yellow;
+                    //quad[2].color = sf::Color::Red;
+                    //quad[3].color = sf::Color::Yellow;
+
+                    quad[0].texCoords = sf::Vector2f(17, 1);
+                    quad[1].texCoords = sf::Vector2f(32, 1);
+                    quad[2].texCoords = sf::Vector2f(32, 16);
+                    quad[3].texCoords = sf::Vector2f(17, 16);
+
+                }
+                else if (level_[curr_index] == 0){
+                    sf::Vertex* quad = &vertices_[curr_index * 4];
+                    quad[0].position = sf::Vector2f((w_offset_ / 2 + j * tile_size.x), (h_offset_ / 2 + i * tile_size.y));
+                    quad[1].position = sf::Vector2f((w_offset_ / 2 + (j + 1) * tile_size.x), (h_offset_ / 2 + i * tile_size.y));
+                    quad[2].position = sf::Vector2f((w_offset_ / 2 + (j + 1) * tile_size.x), (h_offset_ / 2 + (i + 1) * tile_size.y));
+                    quad[3].position = sf::Vector2f((w_offset_ / 2 + j * tile_size.x), (h_offset_ / 2 + (i + 1) * tile_size.y));
+
+                    quad[0].texCoords = sf::Vector2f(1, 1);
+                    quad[1].texCoords = sf::Vector2f(16, 1);
+                    quad[2].texCoords = sf::Vector2f(16, 16);
+                    quad[3].texCoords = sf::Vector2f(1, 16);
+
+                    
+
                 }
             }
         }
     }
 
 }
-\
+
+void tileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+    states.texture = &tile_texture_;
+    target.draw(vertices_, states);
+}
+/*
+void tileMap::draw(sf::RenderTarget& target) const {
+    target.draw(vertices_);
+}
+*/
+
 void tileMap::setLevel(std::vector <int>& level){
     this->level_ = level;
 }
@@ -68,6 +104,7 @@ sf::VertexArray& tileMap::getVertexMap(){
 }
 
 double tileMap::getHOffset(){
+    //std::cout << h_offset_ << std::endl;
     return h_offset_;
 }
 

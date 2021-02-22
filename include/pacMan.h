@@ -7,11 +7,18 @@
 class pacMan : public movable{
     private :
         long long score_;
+        int num_lives_;
     public :
         pacMan();
-        pacMan(myApplication& app);
+        pacMan(myApplication&);
         void updateScore();
+        void updateScore(int);
+        void updateLives();
+        void resetScore();
+        void resetLives();
         const long long getScore();
+        const int getLivesCount();
+
 };
 
 #endif //PAC_MAN_H
