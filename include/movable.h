@@ -7,7 +7,6 @@
 
 class movable{
     protected:
-        tileMap map_;
         sf::Sprite sprite_;
         sf::Texture texture_;
         sf::Vector2f position_;
@@ -17,11 +16,12 @@ class movable{
         bool down_velocity_;
     public:
         movable();
-        movable(myApplication&, const std::string&, const std::string&);
-        void move();
-        void setMap(myApplication&, const std::string&);
+        movable(std::vector <int>&, tileMap&, const std::string&, myApplication&);
+        int getRandomSpawn(std::vector <int>&);
+        void move(tileMap&, std::vector <int>&);
+        sf::Vector2f getPositionFromIndex(int, tileMap&);
         sf::Sprite& getSprite();
-        int getIndexFromPosition();
+        int getIndexFromPosition(tileMap&);
         void setVelocity(const std::string&);
         void killVelocity(const std::string&);
         void setTexture(myApplication&, const std::string&);

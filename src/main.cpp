@@ -15,12 +15,12 @@ int main(){
     tileMap my_wire_frame, my_map;
     app.appInit(1200, 900);
     app.setCurrentScreenType("end");
-    my_wire_frame.loadWireFrame(sf::Vector2u(32, 32) , 20, 25, app);
-    my_map.loadMap("level 1", sf::Vector2u(32, 32) , 20, 25, app);
+    //my_wire_frame.loadWireFrame(sf::Vector2u(32, 32) , 20, 25, app);
+    //my_map.loadMap("level 1", sf::Vector2u(32, 32) , 20, 25, app);
     //pacMan paccy(app);
     //movable paccy(app, "pacman_right_1");
     arena my_arena;
-    my_arena.loadAll(app);
+    my_arena.arenaInit(app, "level 1");
     pacMan& paccy = my_arena.getPacMan();
 
 
@@ -76,11 +76,7 @@ int main(){
         app.updateView();
         app.getCurrentScreen().updateScreen(app);
         //app.drawScreen();
-        app.getWindow().draw(my_wire_frame.getVertexMap());
-        //app.getWindow().draw(my_map.getVertexMap());
-        app.getWindow().draw(my_map);
         my_arena.drawAll(app);
-        //app.getWindow().draw(paccy.getSprite());
         app.getWindow().display();
     }
     return 0;

@@ -3,11 +3,11 @@
 
 enemy::enemy(){}
 
-enemy::enemy(myApplication& app, const std::string& texture_name, const std::string& level_name, int factor) : movable(app, texture_name, level_name){
+enemy::enemy(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app, int factor) : movable(level, tile_map, texture_name, app){
     velocity_factor_ = factor;
 }
 
-enemy::enemy(myApplication& app, const std::string& texture_name, const std::string& level_name) : movable(app, texture_name, level_name){}
+enemy::enemy(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app) : movable(level, tile_map, texture_name, app){}
 
 void enemy::getRandomVelocity(){
     this->killAllVelocity();
@@ -26,10 +26,10 @@ void enemy::getRandomVelocity(){
     }
 }
 
-void enemy::autoMove(){
+void enemy::autoMove(tileMap& tile_map, std::vector <int>& level){
     this->getRandomVelocity();
     for (int i = 1; i <= velocity_factor_; i++){
-        this->move();    
+        this->move(tile_map, level);    
     }
 }
 

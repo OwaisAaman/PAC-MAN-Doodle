@@ -80,10 +80,11 @@ void myResources::loadLevel(){
                 1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1};
 }
 
-std::vector <int>& myResources::getLevel(){
-    return level_1_;
+std::vector <int> myResources::getLevel(const std::string& level_name){
+    if (level_name == "level 1"){
+        return level_1_;
+    }
 }
-
 
 sf::Font& myResources::getFont(const std::string& font_name){
     if (font_name == "pac_font"){

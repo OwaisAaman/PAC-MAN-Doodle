@@ -14,7 +14,6 @@ void myApplication::appInit(const int width, const int height){
     configureWindow(default_window_width_, default_window_height_);
     loadAllScreens();
     updateWindowOrigin();
-    loadAllMaps();
 }
 
 void myApplication::loadScreen(const std::string& type){
@@ -31,15 +30,6 @@ void myApplication::loadScreen(const std::string& type){
 void myApplication::loadAllScreens(){
     this->loadScreen("welcome");
     this->loadScreen("end");
-}
-
-void myApplication::loadMap(tileMap& map_name, const std::string& level_name, sf::Vector2u tile_size, const int x_tiles, const int y_tiles, myApplication& app){
-    map_name.loadMap(level_name, tile_size, x_tiles, y_tiles, app);
-}
-
-void myApplication::loadAllMaps(){
-    loadMap(map_0_, "wire-frame", sf::Vector2u(32, 32) , 20, 25, *this);   //do not hard-code here
-    loadMap(map_1_, "level_1", sf::Vector2u(32, 32) , 20, 25, *this);      //do not hard-code here
 }
 
 void myApplication::setCurrentScreenType(const std::string& type){
@@ -120,15 +110,7 @@ int myApplication::getDefaultWindowHeight(){
     return default_window_height_;
 }
 
-std::vector <int>& myApplication::getLevel(){
-    return resources_.getLevel();
+std::vector <int> myApplication::getLevel(const std::string& level_name){
+    return resources_.getLevel(level_name);
 }
 
-tileMap& myApplication::getMap(const std::string& level_name){
-    if (level_name == "wire-frame"){
-        return map_0_;
-    }
-    else if (level_name == "level 1"){
-        return map_1_;
-    }
-}

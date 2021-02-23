@@ -35,7 +35,7 @@ class myResources{
         void loadAudio(sf::SoundBuffer&, const std::string&);
         void loadAllAudio();
         void loadLevel();
-        std::vector <int>& getLevel();
+        std::vector <int> getLevel(const std::string&);
         sf::Font& getFont(const std::string&);
         sf::Texture& getTexture(const std::string&);
         sf::SoundBuffer& getAudio(const std::string&);

@@ -28,8 +28,6 @@ class myApplication {
         myScreen welcome_screen_;
         myScreen game_screen_;
         myScreen end_screen_;
-        tileMap map_0_;
-        tileMap map_1_;
     public:
         myApplication();
         void appInit(const int, const int);
@@ -37,8 +35,6 @@ class myApplication {
         void configureWindow(const int, const int);
         void loadScreen(const std::string&);
         void loadAllScreens();
-        void loadMap(tileMap&, const std::string&, sf::Vector2u, const int, const int, myApplication&);
-        void loadAllMaps();
         void updateView();
         void drawScreen();
         void updateWindowOrigin();
@@ -54,8 +50,7 @@ class myApplication {
         sf::Vector2f& getWindowOrigin();
         int getDefaultWindowHeight();
         int getDefaultWindowWidth();
-        std::vector <int>& getLevel();
-        tileMap& getMap(const std::string&);
+        std::vector <int> getLevel(const std::string&);
 };
 
 
