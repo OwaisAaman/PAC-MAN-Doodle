@@ -15,8 +15,8 @@ class arena{
         enemy enemy_clyde_;
         enemy enemy_inky_;
         enemy enemy_pinky_;
-        int map_food_count_;
-        bool refresh_tile_map_;
+        int arena_food_count_;
+        bool refresh_map_;
     public:
         arena();
         void setArenaMapArray(myApplication&, const std::string&);
@@ -24,12 +24,17 @@ class arena{
         void loadPacMan(myApplication&);
         void loadEnemies(myApplication&);
         void loadAllMovables(myApplication&);
+        void loadArenaMap(myApplication&);
+        void updateFoodCount();
+        void updateFoodCount(int);
+        void updateMap(myApplication&);
+        void checkMap();
         void moveAll();
         void drawAll(myApplication&);
         enemy& getEnemy(const std::string&);
         pacMan& getPacMan();
         std::vector <int>& getMapArray();
-        
+        int getFoodCount();
 };
 
 #endif //ARENA_H

@@ -1,32 +1,37 @@
 #include "arena.h"
-#include "enemy.h"
-#include "pacMan.h"
-#include "movable.h"
+#include <iostream>
 
 arena::arena(){
     map_ = tileMap();
+    arena_food_count_ = 0;
 }
 
 void arena::setArenaMapArray(myApplication& app, const std::string& level_name){
     arena_map_array_ = app.getLevel(level_name);
 }
 
+void arena::loadArenaMap(myApplication& app){
+    map_.loadMap(arena_map_array_, sf::Vector2u(32, 32) , 21, 25, app);
+}
+
 void arena::arenaInit(myApplication& app, const std::string& level_name){
     setArenaMapArray(app, level_name);
-    map_.loadMap(arena_map_array_, sf::Vector2u(32, 32) , 20, 25, app);
+    loadArenaMap(app);
     loadAllMovables(app);
+    updateFoodCount();
+    refresh_map_ = false;
 }
 
 void arena::loadPacMan(myApplication& app){
-    pac_man_ = pacMan(arena_map_array_, map_, "pacman_right_1", app);
+    pac_man_ = pacMan(arena_map_array_, map_, "pacman_right_1", app, false, 325);
 }
 
 void arena::loadEnemies(myApplication& app){
-    enemy_blinky_ = enemy(arena_map_array_, map_, "ghost_blinky", app, 1);
-    enemy_blue_ = enemy(arena_map_array_, map_, "ghost_blue_ghost", app, 1);
-    enemy_clyde_ = enemy(arena_map_array_, map_, "ghost_clyde", app, 1);
-    enemy_inky_ = enemy(arena_map_array_, map_, "ghost_inky", app, 1);
-    enemy_pinky_ = enemy(arena_map_array_, map_, "ghost_pinky", app, 1);
+    enemy_blinky_ = enemy(arena_map_array_, map_, "ghost_blinky", app, 1, false, 281);
+    enemy_blue_ = enemy(arena_map_array_, map_, "ghost_blue_ghost", app, 1, false, 282);
+    enemy_clyde_ = enemy(arena_map_array_, map_, "ghost_clyde", app, 1, false, 283);
+    enemy_inky_ = enemy(arena_map_array_, map_, "ghost_inky", app, 1, false, 284);
+    enemy_pinky_ = enemy(arena_map_array_, map_, "ghost_pinky", app, 1, false, 285);
 }
 
 void arena::loadAllMovables(myApplication& app){
@@ -34,13 +39,34 @@ void arena::loadAllMovables(myApplication& app){
     loadEnemies(app);
 }
 
+void arena::updateFoodCount(){
+    int fc = 0;
+    for (int i = 0; i < (int)arena_map_array_.size(); i++){
+        if (arena_map_array_[i] == 0){
+            fc++;
+        }
+    }
+    arena_food_count_ = fc;
+}
+
+void arena::updateFoodCount(int number){
+    arena_food_count_ += number;
+}
+
+void arena::updateMap(myApplication& app){
+    if (refresh_map_){
+        loadArenaMap(app);
+        refresh_map_ = false;
+    }
+}
+
 void arena::moveAll(){
     pac_man_.move(map_, arena_map_array_);
-    enemy_blinky_.autoMove(map_, arena_map_array_);
-    enemy_blue_.autoMove(map_, arena_map_array_);
-    enemy_clyde_.autoMove(map_, arena_map_array_);
-    enemy_inky_.autoMove(map_, arena_map_array_);
-    enemy_pinky_.autoMove(map_, arena_map_array_);
+    enemy_blinky_.autoMove(map_, arena_map_array_, true);
+    enemy_blue_.autoMove(map_, arena_map_array_, true);
+    enemy_clyde_.autoMove(map_, arena_map_array_, true);
+    enemy_inky_.autoMove(map_, arena_map_array_, true);
+    enemy_pinky_.autoMove(map_, arena_map_array_, true);
 }
 
 void arena::drawAll(myApplication& app){
@@ -51,6 +77,16 @@ void arena::drawAll(myApplication& app){
     app.getWindow().draw(enemy_clyde_.getSprite());
     app.getWindow().draw(enemy_inky_.getSprite());
     app.getWindow().draw(enemy_pinky_.getSprite());
+}
+
+void arena::checkMap(){
+    int pacman_index = pac_man_.getIndexFromPosition(map_);
+    if (arena_map_array_[pacman_index] == 0){
+        arena_map_array_[pacman_index] = -1;
+        refresh_map_ = true;
+        updateFoodCount();
+        pac_man_.updateScore();
+    }
 }
 
 pacMan& arena::getPacMan(){
@@ -77,4 +113,8 @@ enemy& arena::getEnemy(const std::string& name){
 
 std::vector <int>& arena::getMapArray(){
     return arena_map_array_;
+}
+
+int arena::getFoodCount(){
+    return arena_food_count_;
 }

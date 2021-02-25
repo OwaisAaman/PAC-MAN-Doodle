@@ -4,21 +4,13 @@
 #include "myScreen.h"
 #include <SFML/Audio.hpp>
 #include "myApplication.h"
-#include "tileMap.h"
-#include "pacMan.h"
 #include "arena.h"
-
 
 int main(){
 
     myApplication app;
-    tileMap my_wire_frame, my_map;
     app.appInit(1200, 900);
     app.setCurrentScreenType("end");
-    //my_wire_frame.loadWireFrame(sf::Vector2u(32, 32) , 20, 25, app);
-    //my_map.loadMap("level 1", sf::Vector2u(32, 32) , 20, 25, app);
-    //pacMan paccy(app);
-    //movable paccy(app, "pacman_right_1");
     arena my_arena;
     my_arena.arenaInit(app, "level 1");
     pacMan& paccy = my_arena.getPacMan();
@@ -70,13 +62,15 @@ int main(){
                 paccy.killVelocity("Right");
             }
         }
-        //paccy.move();
-        my_arena.moveAll();
         app.getWindow().clear();
+        my_arena.moveAll();
+        my_arena.checkMap();
+        my_arena.updateMap(app);
         app.updateView();
         app.getCurrentScreen().updateScreen(app);
         //app.drawScreen();
         my_arena.drawAll(app);
+        //std::cout << my_arena.getPacMan().getScore() << std::endl;
         app.getWindow().display();
     }
     return 0;

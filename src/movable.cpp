@@ -4,8 +4,11 @@
 
 movable::movable(){}
 
-movable::movable(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app){
-    int spawn_index = getRandomSpawn(level);
+movable::movable(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app, 
+                 bool random_spawn, int spawn_index){
+    if (!random_spawn){
+        int spawn_index = getRandomSpawn(level);
+    }                 
     position_ = getPositionFromIndex(spawn_index, tile_map);
 
     sprite_.setTexture(app.getTexture(texture_name));
@@ -34,8 +37,9 @@ sf::Vector2f movable::getPositionFromIndex(int spawn_index, tileMap& tile_map){
     double h_offset = tile_map.getHOffset();
     double w_offset = tile_map.getWOffset();
 
-    int row = spawn_index / tile_map.getNumTiles().x;
-    int col = spawn_index - row * tile_map.getNumTiles().x;
+    int row = tile_map.getRow(spawn_index);
+    int col = tile_map.getCol(spawn_index, row);
+
     return sf::Vector2f((w_offset / 2 + col * tile_map.getTileSize().x), (h_offset / 2 + row * tile_map.getTileSize().y));
 }
 
@@ -51,7 +55,7 @@ int movable::getIndexFromPosition(tileMap& tile_map){
 
 void movable::move(tileMap& tile_map, std::vector <int>& level){
     int curr_index = this->getIndexFromPosition(tile_map);
-    if (curr_index > 500 || curr_index < 0){std::cout << "error" << std::endl;}
+    //if (curr_index > 500 || curr_index < 0){std::cout << "error" << std::endl;}
 
     if (right_velocity_){
         if (level[curr_index + 1] != 1){

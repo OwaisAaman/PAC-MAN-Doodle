@@ -16,7 +16,7 @@ class movable{
         bool down_velocity_;
     public:
         movable();
-        movable(std::vector <int>&, tileMap&, const std::string&, myApplication&);
+        movable(std::vector <int>&, tileMap&, const std::string&, myApplication&, bool, int);
         int getRandomSpawn(std::vector <int>&);
         void move(tileMap&, std::vector <int>&);
         sf::Vector2f getPositionFromIndex(int, tileMap&);

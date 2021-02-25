@@ -10,7 +10,7 @@ class pacMan : public movable{
         int num_lives_;
     public :
         pacMan();
-        pacMan(std::vector <int>&, tileMap&, const std::string&, myApplication&);
+        pacMan(std::vector <int>&, tileMap&, const std::string&, myApplication&, bool, int);
         void updateScore();
         void updateScore(int);
         void updateLives();

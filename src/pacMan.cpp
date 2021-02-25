@@ -5,7 +5,7 @@ pacMan::pacMan(){
     num_lives_ = 5;   //do not hard-code this here
 }
 
-pacMan::pacMan(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app) : movable(level, tile_map, "pacman_right_1", app){
+pacMan::pacMan(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app, bool random_spawn, int spawn_index) : movable(level, tile_map, "pacman_right_1", app, random_spawn, spawn_index){
     score_ = 0;
     num_lives_ = 5;
 }

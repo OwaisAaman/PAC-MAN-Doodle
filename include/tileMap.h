@@ -24,11 +24,14 @@ class tileMap : public sf::Drawable, sf::Transformable {
         void setTileSize(sf::Vector2u);
         void setNumTiles(const int, const int);
         void mapInit(sf::Vector2u, const int, const int, myApplication&);
+        void resetVertexMap();
         sf::VertexArray& getVertexMap();
         double getHOffset();
         double getWOffset();
         sf::Vector2u getTileSize();
         sf::Vector2u getNumTiles();
+        int getRow(int&);
+        int getCol(int&, int&);
         virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 };
 
