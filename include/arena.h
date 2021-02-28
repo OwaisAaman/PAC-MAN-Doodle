@@ -5,6 +5,8 @@
 #include "enemy.h"
 #include "tileMap.h"
 
+class myApplication;
+
 class arena{
     private:
         tileMap map_;
@@ -34,6 +36,7 @@ class arena{
         enemy& getEnemy(const std::string&);
         pacMan& getPacMan();
         std::vector <int>& getMapArray();
+        tileMap& getMap();
         int getFoodCount();
 };
 

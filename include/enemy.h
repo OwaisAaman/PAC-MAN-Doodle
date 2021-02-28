@@ -1,8 +1,9 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "myApplication.h"
 #include "movable.h"
+
+class myApplication; 
 
 class enemy : public movable{
     private:
@@ -21,6 +22,7 @@ class enemy : public movable{
         void killAllVelocity();    //will set all the boolean velocity vars to false
         void setVelocityFactor(int);
         void getVelocityFromIndex(int, int);
+        void initFirstPath();
 
 };
 

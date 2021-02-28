@@ -20,12 +20,15 @@ class myApplication {
         sf::RenderWindow window_;
         int default_window_width_;
         int default_window_height_;
+        int current_level_;
         sf::VideoMode videomode_;
         sf::Vector2f window_origin_;
         sf::View view_;
         std::string current_screen_type_;
+        sf::Vector2u min_window_size_;
         myResources resources_;
         myScreen welcome_screen_;
+        myScreen pre_game_screen_;
         myScreen game_screen_;
         myScreen end_screen_;
     public:
@@ -40,6 +43,7 @@ class myApplication {
         void updateWindowOrigin();
         void setCurrentScreenType(const std::string&);
         void app_run();
+        void setMinWindowSize(sf::Vector2u);
         const std::string& getCurrenScreenType(); 
         sf::Font& getFont(const std::string&);
         sf::Texture& getTexture(const std::string&);

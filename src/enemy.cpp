@@ -1,15 +1,34 @@
 #include "enemy.h"
 #include <stdlib.h>
+#include "aStar.h"
+#include <iostream>
+#include "myApplication.h"
 
 enemy::enemy(){}
 
 enemy::enemy(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app, int factor, bool random_spawn, int spawn_index) : movable(level, tile_map, texture_name, app, random_spawn, spawn_index){
     velocity_factor_ = factor;
     setSource(spawn_index);
+    setDestination(spawn_index - tile_map.getNumTiles().x, false, level);
+    initFirstPath();
 }
+
 
 enemy::enemy(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app, bool random_spawn, int spawn_index) : movable(level, tile_map, texture_name, app, random_spawn, spawn_index){
     setSource(spawn_index);
+    setDestination(spawn_index - tile_map.getNumTiles().x, false, level);
+    initFirstPath();
+}
+
+void enemy::initFirstPath(){
+    for (int i = 0; i < 9; i++){
+        if (i % 2 == 0){
+            path_.push_back(destination_);
+        }
+        else {
+            path_.push_back(source_);
+        }
+    }
 }
 
 void enemy::setSource(int index){
@@ -67,7 +86,21 @@ void enemy::autoMove(tileMap& tile_map, std::vector <int>& level, bool random_mo
         }
     }
     else {
-
+        int temp_dest = path_.back();
+        path_.pop_back();
+        getVelocityFromIndex(source_, temp_dest);
+        move(tile_map, level);
+        setSource(temp_dest);
+        
+        if (path_.size() < 5){
+            setDestination(0, true, level);
+            aStar::pathFind path;
+            std::vector <int> new_path;
+            std::cout << "calling a star for " << source_ << " and " << destination_ << std::endl;
+            new_path = path.getPath(source_, destination_, tile_map, level);
+            std::cout << "the size of the returned path is " << path_.size() << std::endl;
+            path_.insert(std::end(path_), std::begin(new_path), std::end(new_path));
+        }
     }
 }
 

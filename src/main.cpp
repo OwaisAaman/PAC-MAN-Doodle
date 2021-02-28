@@ -10,7 +10,7 @@ int main(){
 
     myApplication app;
     app.appInit(1200, 900);
-    app.setCurrentScreenType("end");
+    app.setCurrentScreenType("game");
     arena my_arena;
     my_arena.arenaInit(app, "level 1");
     pacMan& paccy = my_arena.getPacMan();
@@ -68,8 +68,8 @@ int main(){
         my_arena.updateMap(app);
         app.updateView();
         app.getCurrentScreen().updateScreen(app);
-        //app.drawScreen();
-        my_arena.drawAll(app);
+        app.drawScreen();
+        //my_arena.drawAll(app);
         //std::cout << my_arena.getPacMan().getScore() << std::endl;
         app.getWindow().display();
     }

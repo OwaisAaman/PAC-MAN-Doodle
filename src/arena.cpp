@@ -1,5 +1,6 @@
 #include "arena.h"
 #include <iostream>
+#include "myApplication.h"
 
 arena::arena(){
     map_ = tileMap();
@@ -117,4 +118,8 @@ std::vector <int>& arena::getMapArray(){
 
 int arena::getFoodCount(){
     return arena_food_count_;
+}
+
+tileMap& arena::getMap(){
+    return map_;
 }

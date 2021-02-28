@@ -1,6 +1,7 @@
 #include "movable.h"
 #include <stdlib.h>
 #include <iostream>
+#include "myApplication.h"
 
 movable::movable(){}
 

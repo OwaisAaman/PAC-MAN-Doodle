@@ -2,7 +2,8 @@
 #define PAC_MAN_H
 
 #include "movable.h"
-#include "myApplication.h"
+
+class myApplication;
 
 class pacMan : public movable{
     private :

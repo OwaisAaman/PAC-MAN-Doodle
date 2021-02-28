@@ -2,8 +2,9 @@
 #define MOVABLE_H
 
 #include <SFML/Graphics.hpp>
-#include "myApplication.h"
 #include "tileMap.h"
+
+class myApplication;
 
 class movable{
     protected:

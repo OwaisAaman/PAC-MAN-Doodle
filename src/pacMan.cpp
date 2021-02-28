@@ -1,4 +1,5 @@
 #include "pacMan.h"
+#include "myApplication.h"
 
 pacMan::pacMan(){
     score_ = 0;
