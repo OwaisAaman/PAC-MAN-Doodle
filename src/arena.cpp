@@ -61,6 +61,19 @@ void arena::updateMap(myApplication& app){
     }
 }
 
+void arena::refreshMovables(sf::Vector2f& delta){
+    pac_man_.getSprite().move(delta);
+    enemy_blinky_.getSprite().move(delta);
+    enemy_blue_.getSprite().move(delta);
+    enemy_clyde_.getSprite().move(delta);
+    enemy_inky_.getSprite().move(delta);
+    enemy_pinky_.getSprite().move(delta);
+}
+
+void arena::setRefreshMap(bool value){
+    refresh_map_ = value;
+}
+
 void arena::moveAll(){
     pac_man_.move(map_, arena_map_array_);
     enemy_blinky_.autoMove(map_, arena_map_array_, true);
@@ -71,6 +84,8 @@ void arena::moveAll(){
 }
 
 void arena::drawAll(myApplication& app){
+    checkMap();
+    updateMap(app);
     app.getWindow().draw(map_);
     app.getWindow().draw(pac_man_.getSprite());
     app.getWindow().draw(enemy_blinky_.getSprite());
@@ -82,7 +97,7 @@ void arena::drawAll(myApplication& app){
 
 void arena::checkMap(){
     int pacman_index = pac_man_.getIndexFromPosition(map_);
-    if (arena_map_array_[pacman_index] == 0){
+    if (arena_map_array_[pacman_index] == 0 && pac_man_.getActiveStatus() == true){
         arena_map_array_[pacman_index] = -1;
         refresh_map_ = true;
         updateFoodCount();
@@ -122,4 +137,9 @@ int arena::getFoodCount(){
 
 tileMap& arena::getMap(){
     return map_;
+}
+
+void arena::updateOffsets(myApplication& app){
+    map_.updateWOffset(app);
+    map_.updateHOffset(app);
 }

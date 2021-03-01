@@ -59,6 +59,7 @@ void enemy::getRandomVelocity(){
     else if (index == 3){
         right_velocity_ = true;
     }
+    is_active_ = true;
 }
 
 void enemy::getVelocityFromIndex(int source, int destination){
@@ -76,6 +77,7 @@ void enemy::getVelocityFromIndex(int source, int destination){
     else {
         up_velocity_ = true;
     }
+    is_active_ = true;
 }
 
 void enemy::autoMove(tileMap& tile_map, std::vector <int>& level, bool random_move){
@@ -105,6 +107,7 @@ void enemy::autoMove(tileMap& tile_map, std::vector <int>& level, bool random_mo
 }
 
 void enemy::killAllVelocity(){
+    is_active_ = false;
     right_velocity_ = false;
     left_velocity_ = false;
     up_velocity_ = false;

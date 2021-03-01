@@ -1,5 +1,6 @@
 #include "myResources.h"
 #include <iostream>
+#include <fstream>
 
 void myResources::loadFont(sf::Font& font_name, const std::string& file_path){
     if (!font_name.loadFromFile(file_path)){
@@ -49,40 +50,40 @@ void myResources::loadAllResources(){
     this->loadAllFonts();
     this->loadAllTextures();
     this->loadAllAudio();
-    this->loadLevel();
+    this->loadAllLevels();
 }
 
-void myResources::loadLevel(){
-    level_1_ = {1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,
-1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,
-1,	0,	1,	1,	0,	1,	1,	1,	1,	0,	1,	0,	1,	1,	1,	1,	0,	1,	1,	0,	1,
-1,	0,	1,	1,	0,	1,	1,	1,	1,	0,	1,	0,	1,	1,	1,	1,	0,	1,	1,	0,	1,
-1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,
-1,	0,	1,	1,	0,	1,	0,	1,	1,	1,	1,	1,	1,	1,	0,	1,	0,	1,	1,	0,	1,
-1,	0,	1,	1,	0,	1,	0,	0,	0,	0,	1,	0,	0,	0,	0,	1,	0,	1,	1,	0,	1,
-1,	0,	0,	0,	0,	1,	1,	1,	1,	0,	1,	0,	1,	1,	1,	1,	0,	0,	0,	0,	1,
-1,	1,	1,	1,	0,	1,	1,	1,	1,	0,	0,	0,	1,	1,	1,	1,	0,	1,	1,	1,	1,
--1,	-1,	-1,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	1,	-1,	-1,	-1,
--1,	-1,	-1,	1,	0,	1,	0,	1,	1,	-1,	-1,	-1,	1,	1,	0,	1,	0,	1,	-1,	-1,	-1,
-1,	1,	1,	1,	0,	0,	0,	1,	-1,	-1,	-1,	-1,	-1,	1,	0,	0,	0,	1,	1,	1,	1,
--1,	-1,	-1,	-1,	0,	0,	0,	1,	-1,	-1,	-1,	-1,	-1,	1,	0,	0,	0,	-1,	-1,	-1,	-1,
-1,	1,	1,	1,	0,	0,	0,	1,	-1,	-1,	-1,	-1,	-1,	1,	0,	0,	0,	1,	1,	1,	1,
--1,	-1,	-1,	1,	0,	1,	0,	1,	1,	1,	1,	1,	1,	1,	0,	1,	0,	1,	-1,	-1,	-1,
--1,	-1,	-1,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	1,	-1,	-1,	-1,
-1,	1,	1,	1,	0,	1,	0,	1,	1,	1,	1,	1,	1,	1,	0,	1,	0,	1,	1,	1,	1,
-1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,
-1,	0,	1,	1,	0,	1,	1,	1,	1,	0,	1,	0,	1,	1,	1,	1,	0,	1,	1,	0,	1,
-1,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	1,
-1,	0,	0,	1,	0,	1,	0,	1,	1,	1,	1,	1,	1,	1,	0,	1,	0,	1,	0,	0,	1,
-1,	0,	0,	0,	0,	1,	0,	0,	0,	0,	1,	0,	0,	0,	0,	1,	0,	0,	0,	0,	1,
-1,	0,	1,	1,	1,	1,	1,	1,	1,	0,	1,	0,	1,	1,	1,	1,	1,	1,	1,	0,	1,
-1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,
-1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1};
+void myResources::loadLevel(std::vector <int>& level_name, const std::string& f_name){
+    std::ifstream fin (f_name);
+    int element;
+    while (fin >> element){
+        level_name.push_back(element);
+    }
+}
+
+void myResources::loadAllLevels(){
+    loadLevel(level_1_, "..//assets//maps//level_1.txt");
+    loadLevel(level_2_, "..//assets//maps//level_2.txt");
+    loadLevel(level_3_, "..//assets//maps//level_3.txt");
+    loadLevel(level_4_, "..//assets//maps//level_4.txt");
+    loadLevel(level_5_, "..//assets//maps//level_5.txt");
 }
 
 std::vector <int> myResources::getLevel(const std::string& level_name){
     if (level_name == "level 1"){
         return level_1_;
+    }
+    else if (level_name == "level 2"){
+        return level_2_;
+    }
+    else if (level_name == "level 3"){
+        return level_3_;
+    }
+    else if (level_name == "level 4"){
+        return level_4_;
+    }
+    else if (level_name == "level 5"){
+        return level_5_;
     }
 }
 

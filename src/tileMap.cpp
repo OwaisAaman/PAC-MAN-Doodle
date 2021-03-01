@@ -8,12 +8,12 @@ tileMap::tileMap() {
     w_offset_ = 0;
 }
 
-void tileMap::updateHOffset(sf::Vector2u tile_size, const int y_tiles, myApplication& app){
-    h_offset_ = app.getDefaultWindowHeight() - y_tiles * tile_size.y;   //change from def size to curr size and set the bool of update tile map to be true
+void tileMap::updateHOffset(myApplication& app){
+    h_offset_ = (double)app.getWindow().getSize().y - num_tiles_.y * tile_size_.y;   //reload map
 }
 
-void tileMap::updateWOffset(sf::Vector2u tile_size, const int x_tiles, myApplication& app){
-    w_offset_ = app.getDefaultWindowWidth() - x_tiles * tile_size.x;   //change from def size to curr size and set the bool of update tile map to be true
+void tileMap::updateWOffset(myApplication& app){
+    w_offset_ = (double)app.getWindow().getSize().x - num_tiles_.x * tile_size_.x;   //reload map
 }
 
 void tileMap::setTileSize(sf::Vector2u tile_size){
@@ -26,9 +26,9 @@ void tileMap::setNumTiles(const int x_tiles, const int y_tiles){
 
 void tileMap::mapInit(sf::Vector2u tile_size, const int x_tiles, const int y_tiles, myApplication& app){
     setTileSize(tile_size);
-    updateHOffset(tile_size, y_tiles, app);
-    updateWOffset(tile_size, x_tiles, app);
     setNumTiles(x_tiles, y_tiles);
+    updateHOffset(app);
+    updateWOffset(app);
     tile_texture_ = app.getTexture("game");
 }
 

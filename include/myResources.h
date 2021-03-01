@@ -27,6 +27,11 @@ class myResources{
         sf::SoundBuffer eat_sound_buff_;
         sf::SoundBuffer die_sound_buff_;
         std::vector <int> level_1_;
+        std::vector <int> level_2_;
+        std::vector <int> level_3_;
+        std::vector <int> level_4_;
+        std::vector <int> level_5_;
+
     public:
         void loadFont(sf::Font&, const std::string&);
         void loadAllFonts();
@@ -34,7 +39,8 @@ class myResources{
         void loadAllTextures();
         void loadAudio(sf::SoundBuffer&, const std::string&);
         void loadAllAudio();
-        void loadLevel();
+        void loadLevel(std::vector <int>&, const std::string&);
+        void loadAllLevels();
         std::vector <int> getLevel(const std::string&);
         sf::Font& getFont(const std::string&);
         sf::Texture& getTexture(const std::string&);

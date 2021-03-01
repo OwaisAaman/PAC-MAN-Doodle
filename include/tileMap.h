@@ -18,8 +18,8 @@ class tileMap : public sf::Drawable, sf::Transformable {
         tileMap();
         void loadMap(std::vector <int>&, sf::Vector2u, const int, const int, myApplication&);
         void loadWireFrame(sf::Vector2u, const int, const int, myApplication&);
-        void updateHOffset(sf::Vector2u, const int, myApplication&);
-        void updateWOffset(sf::Vector2u, const int, myApplication&);
+        void updateHOffset(myApplication&);
+        void updateWOffset(myApplication&);
         void setTileSize(sf::Vector2u);
         void setNumTiles(const int, const int);
         void mapInit(sf::Vector2u, const int, const int, myApplication&);

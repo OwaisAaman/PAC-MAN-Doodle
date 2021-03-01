@@ -15,6 +15,11 @@ class myScreen {
         headerText top_row_;
         headerText bottom_row_;
         headerText middle_row_;
+        headerText top_row_2_;
+        headerText left_row_1_;
+        headerText left_row_2_;
+        headerText right_row_1_;
+        headerText right_row_2_;
         sf::Sprite sprite_;
         std::string screen_type_;
         sf::Vector2u window_size_; //keeping a copy here to check when to update the screen

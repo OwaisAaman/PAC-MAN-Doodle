@@ -55,7 +55,7 @@ void myApplication::configureWindow(const int screen_width, const int screen_hei
     videomode_.height = screen_height;
     window_.create(videomode_, "PAC-MAN");
     window_.setFramerateLimit(60);
-    setMinWindowSize(sf::Vector2u(900, 700));
+    setMinWindowSize(sf::Vector2u(screen_width, screen_height));
 }
 
 void myApplication::updateView(){

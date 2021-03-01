@@ -15,6 +15,7 @@ class movable{
         bool left_velocity_;
         bool up_velocity_;
         bool down_velocity_;
+        bool is_active_;
     public:
         movable();
         movable(std::vector <int>&, tileMap&, const std::string&, myApplication&, bool, int);
@@ -26,6 +27,7 @@ class movable{
         void setVelocity(const std::string&);
         void killVelocity(const std::string&);
         void setTexture(myApplication&, const std::string&);
+        bool getActiveStatus();
 };
 
 

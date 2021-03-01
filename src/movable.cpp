@@ -21,6 +21,7 @@ movable::movable(std::vector <int>& level, tileMap& tile_map, const std::string&
     left_velocity_ = false;
     up_velocity_ = false;
     down_velocity_ = false;
+    is_active_ = false;
 }
 
 int movable::getRandomSpawn(std::vector <int>& level){
@@ -83,6 +84,7 @@ void movable::move(tileMap& tile_map, std::vector <int>& level){
 }
 
 void movable::setVelocity(const std::string& direction){
+    is_active_ = true;
     if (direction == "Up"){
         up_velocity_ = true;
     }
@@ -98,6 +100,7 @@ void movable::setVelocity(const std::string& direction){
 }
 
 void movable::killVelocity(const std::string& direction){
+    is_active_ = false;
     if (direction == "Up"){
         up_velocity_ = false;
     }
@@ -114,4 +117,8 @@ void movable::killVelocity(const std::string& direction){
 
 void movable::setTexture(myApplication& app, const std::string& texture_name){
     sprite_.setTexture(app.getTexture(texture_name));
+}
+
+bool movable::getActiveStatus(){
+    return is_active_;
 }

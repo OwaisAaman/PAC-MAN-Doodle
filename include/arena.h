@@ -30,9 +30,12 @@ class arena{
         void updateFoodCount();
         void updateFoodCount(int);
         void updateMap(myApplication&);
+        void refreshMovables(sf::Vector2f&);
         void checkMap();
         void moveAll();
         void drawAll(myApplication&);
+        void setRefreshMap(bool);
+        void updateOffsets(myApplication&);
         enemy& getEnemy(const std::string&);
         pacMan& getPacMan();
         std::vector <int>& getMapArray();

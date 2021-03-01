@@ -29,10 +29,10 @@ void headerText::setAlignment(const std::string& alignment) {
         text_.setOrigin(bounds.width / 2, bounds.height / 2);
     }
     else if (alignment == "right") {
-        text_.setOrigin(bounds.width, bounds.top);
+        text_.setOrigin(bounds.width, 0);
     }
     else if (alignment == "left"){
-        text_.setOrigin(bounds.left, bounds.top);
+        text_.setOrigin(0, 0);
     }
 }
 
