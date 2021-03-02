@@ -1,7 +1,10 @@
 #include "myApplication.h"
 #include <iostream>
 
-myApplication::myApplication(){}
+myApplication::myApplication(){
+    score_ = 0;
+    high_score_ = 0;
+}
 
 void myApplication::setMinWindowSize(sf::Vector2u size){
     min_window_size_ = size;
@@ -10,14 +13,6 @@ void myApplication::setMinWindowSize(sf::Vector2u size){
 void myApplication::setDefaultWindow(const int width, const int height){
     default_window_width_ = width;
     default_window_height_ = height;
-}
-
-void myApplication::appInit(const int width, const int height){
-    setDefaultWindow(width, height);
-    resources_.loadAllResources();
-    configureWindow(default_window_width_, default_window_height_);
-    loadAllScreens();
-    updateWindowOrigin();
 }
 
 void myApplication::loadScreen(const std::string& type){
@@ -50,11 +45,15 @@ void myApplication::setCurrentScreenType(const std::string& type){
     current_screen_type_ = type;
 }
 
+void myApplication::setCurrentLevel(int level){
+    current_level_ = level;
+}
+
 void myApplication::configureWindow(const int screen_width, const int screen_height){
     videomode_.width = screen_width;
     videomode_.height = screen_height;
     window_.create(videomode_, "PAC-MAN");
-    window_.setFramerateLimit(60);
+    window_.setFramerateLimit(15);
     setMinWindowSize(sf::Vector2u(screen_width, screen_height));
 }
 
@@ -66,6 +65,17 @@ void myApplication::updateView(){
 
 void myApplication::updateWindowOrigin(){
     window_origin_ = {(float)window_.getSize().x / 2, (float)window_.getSize().y / 2};
+}
+
+void myApplication::appInit(const int width, const int height){
+    setDefaultWindow(width, height);
+    resources_.loadAllResources();
+    configureWindow(default_window_width_, default_window_height_);
+    max_level_ = 5;
+    setCurrentScreenType("welcome");
+    setCurrentLevel(1);
+    loadAllScreens();
+    updateWindowOrigin();
 }
 
 void myApplication::drawScreen(){
@@ -89,8 +99,91 @@ void myApplication::drawScreen(){
     }
 }
 
+void myApplication::checkWindowClosed(sf::Event& event){
+    if (event.type == sf::Event::Closed){
+        window_.close();
+    }
+}
 
-void myApplication::app_run(){}
+void myApplication::checkChangeScreen(sf::Event& event){
+    if (current_screen_type_ == "welcome" && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
+        setCurrentScreenType("pre_game");
+        loadScreen(current_screen_type_);
+    }
+    else if (current_screen_type_ == "pre_game" && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
+        setCurrentScreenType("game");
+        loadScreen(current_screen_type_);
+    }
+}
+
+void myApplication::checkPacManVelocity(sf::Event& event){
+    if (current_screen_type_ == "game"){
+        if (event.type == sf::Event::KeyPressed){
+            if (event.key.code == sf::Keyboard::Up){
+                game_screen_.setVelocity(*this, "Up");
+            }
+            else if (event.key.code == sf::Keyboard::Down){
+                game_screen_.setVelocity(*this, "Down");
+            }
+            else if (event.key.code == sf::Keyboard::Right){
+                game_screen_.setVelocity(*this, "Right");
+            }
+            else if (event.key.code == sf::Keyboard::Left){
+                game_screen_.setVelocity(*this, "Left");
+            }
+        }
+        else if (event.type == sf::Event::KeyReleased){
+            if (event.key.code == sf::Keyboard::Up){
+                game_screen_.killVelocity("Up");
+            }
+            else if (event.key.code == sf::Keyboard::Down){
+                game_screen_.killVelocity("Down");
+            }
+            else if (event.key.code == sf::Keyboard::Right){
+                game_screen_.killVelocity("Right");
+            }
+            else if (event.key.code == sf::Keyboard::Left){
+                game_screen_.killVelocity("Left");
+            }
+        }
+    }
+}
+
+void myApplication::checkLevelClear(){
+    if (current_screen_type_ == "game" && getCurrentScreen().getLevelClearStatus() == true){
+        if (current_level_ == max_level_){
+            setCurrentScreenType("end");
+            loadScreen(current_screen_type_);
+        }
+        else {
+            setCurrentLevel(current_level_ + 1);
+            setCurrentScreenType("pre_game");
+            loadScreen(current_screen_type_);
+        }
+    }
+}
+
+void myApplication::runApp(){
+    appInit(1200, 900);
+    while (window_.isOpen()){
+        sf::Event event;
+        while (window_.pollEvent(event)){
+            checkWindowClosed(event);
+            checkChangeScreen(event);
+            checkPacManVelocity(event);
+            checkLevelClear();
+        }
+        window_.clear();
+        updateView();
+        getCurrentScreen().updateScreen(*this);
+        drawScreen();
+        window_.display();
+    }
+}
+
+void myApplication::resetApp(){
+    score_ = 0;
+}
 
 sf::Font& myApplication::getFont(const std::string& font_name){
     return resources_.getFont(font_name);
@@ -143,7 +236,10 @@ int myApplication::getDefaultWindowHeight(){
     return default_window_height_;
 }
 
-std::vector <int> myApplication::getLevel(const std::string& level_name){
-    return resources_.getLevel(level_name);
+std::vector <int> myApplication::getLevel(int level){
+    return resources_.getLevel(level);
 }
 
+const int myApplication::getCurrentLevel(){
+    return current_level_;
+}

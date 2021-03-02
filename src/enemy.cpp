@@ -106,14 +106,6 @@ void enemy::autoMove(tileMap& tile_map, std::vector <int>& level, bool random_mo
     }
 }
 
-void enemy::killAllVelocity(){
-    is_active_ = false;
-    right_velocity_ = false;
-    left_velocity_ = false;
-    up_velocity_ = false;
-    down_velocity_ = false;
-}
-
 void enemy::setVelocityFactor(int factor){
     velocity_factor_ = factor;
 }

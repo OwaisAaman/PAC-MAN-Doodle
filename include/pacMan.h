@@ -17,6 +17,7 @@ class pacMan : public movable{
         void updateLives();
         void resetScore();
         void resetLives();
+        void setNewTexture(myApplication&, const std::string&);
         const long long getScore();
         const int getLivesCount();
 

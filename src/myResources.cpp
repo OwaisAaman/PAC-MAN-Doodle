@@ -69,20 +69,20 @@ void myResources::loadAllLevels(){
     loadLevel(level_5_, "..//assets//maps//level_5.txt");
 }
 
-std::vector <int> myResources::getLevel(const std::string& level_name){
-    if (level_name == "level 1"){
+std::vector <int> myResources::getLevel(int level){
+    if (level == 1){
         return level_1_;
     }
-    else if (level_name == "level 2"){
+    else if (level == 2){
         return level_2_;
     }
-    else if (level_name == "level 3"){
+    else if (level == 3){
         return level_3_;
     }
-    else if (level_name == "level 4"){
+    else if (level == 4){
         return level_4_;
     }
-    else if (level_name == "level 5"){
+    else if (level == 5){
         return level_5_;
     }
 }

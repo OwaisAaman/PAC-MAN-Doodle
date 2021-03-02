@@ -21,6 +21,9 @@ class myApplication {
         int default_window_width_;
         int default_window_height_;
         int current_level_;
+        int max_level_;
+        long long score_;
+        long long high_score_;
         sf::VideoMode videomode_;
         sf::Vector2f window_origin_;
         sf::View view_;
@@ -42,9 +45,16 @@ class myApplication {
         void drawScreen();
         void updateWindowOrigin();
         void setCurrentScreenType(const std::string&);
-        void app_run();
+        void setCurrentLevel(int);
+        void runApp();
+        void checkWindowClosed(sf::Event&);
+        void checkChangeScreen(sf::Event&);
+        void checkPacManVelocity(sf::Event&);
         void setMinWindowSize(sf::Vector2u);
+        void resetApp();
+        void checkLevelClear();
         const std::string& getCurrenScreenType(); 
+        const int getCurrentLevel();
         sf::Font& getFont(const std::string&);
         sf::Texture& getTexture(const std::string&);
         sf::SoundBuffer& getAudio(const std::string&);
@@ -54,7 +64,7 @@ class myApplication {
         sf::Vector2f& getWindowOrigin();
         int getDefaultWindowHeight();
         int getDefaultWindowWidth();
-        std::vector <int> getLevel(const std::string&);
+        std::vector <int> getLevel(int);
 };
 
 

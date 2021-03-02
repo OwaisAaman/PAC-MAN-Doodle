@@ -97,6 +97,15 @@ void movable::setVelocity(const std::string& direction){
     else if (direction == "Left"){
         left_velocity_ = true;
     }
+
+    if (up_velocity_ + down_velocity_ + right_velocity_ + left_velocity_ > 1){
+        killAllVelocity();
+    }
+}
+
+void movable::setPosition(sf::Vector2f new_position){
+    position_ = new_position;
+    sprite_.setPosition(position_);
 }
 
 void movable::killVelocity(const std::string& direction){
@@ -115,10 +124,22 @@ void movable::killVelocity(const std::string& direction){
     }
 }
 
+void movable::killAllVelocity(){
+    is_active_ = false;
+    right_velocity_ = false;
+    left_velocity_ = false;
+    up_velocity_ = false;
+    down_velocity_ = false;
+}
+
 void movable::setTexture(myApplication& app, const std::string& texture_name){
     sprite_.setTexture(app.getTexture(texture_name));
 }
 
 bool movable::getActiveStatus(){
     return is_active_;
+}
+
+sf::Vector2f movable::getPosition(){
+    return position_;
 }

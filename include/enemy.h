@@ -19,7 +19,6 @@ class enemy : public movable{
         void setSource(int);
         void setDestination(int, bool, std::vector <int>&);
         void getRandomVelocity();  //will randomly set one of the velocity vars to be true and rest others to be false
-        void killAllVelocity();    //will set all the boolean velocity vars to false
         void setVelocityFactor(int);
         void getVelocityFromIndex(int, int);
         void initFirstPath();

@@ -5,18 +5,19 @@
 arena::arena(){
     map_ = tileMap();
     arena_food_count_ = 0;
+    level_clear_ = false;
 }
 
-void arena::setArenaMapArray(myApplication& app, const std::string& level_name){
-    arena_map_array_ = app.getLevel(level_name);
+void arena::setArenaMapArray(myApplication& app){
+    arena_map_array_ = app.getLevel(app.getCurrentLevel());
 }
 
 void arena::loadArenaMap(myApplication& app){
     map_.loadMap(arena_map_array_, sf::Vector2u(32, 32) , 21, 25, app);
 }
 
-void arena::arenaInit(myApplication& app, const std::string& level_name){
-    setArenaMapArray(app, level_name);
+void arena::arenaInit(myApplication& app){
+    setArenaMapArray(app);
     loadArenaMap(app);
     loadAllMovables(app);
     updateFoodCount();
@@ -62,12 +63,12 @@ void arena::updateMap(myApplication& app){
 }
 
 void arena::refreshMovables(sf::Vector2f& delta){
-    pac_man_.getSprite().move(delta);
-    enemy_blinky_.getSprite().move(delta);
-    enemy_blue_.getSprite().move(delta);
-    enemy_clyde_.getSprite().move(delta);
-    enemy_inky_.getSprite().move(delta);
-    enemy_pinky_.getSprite().move(delta);
+    pac_man_.setPosition(pac_man_.getPosition() + delta);
+    enemy_blinky_.setPosition(enemy_blinky_.getPosition() + delta);
+    enemy_blue_.setPosition(enemy_blue_.getPosition() + delta);
+    enemy_clyde_.setPosition(enemy_clyde_.getPosition() + delta);
+    enemy_inky_.setPosition(enemy_inky_.getPosition() + delta);
+    enemy_pinky_.setPosition(enemy_pinky_.getPosition() + delta);
 }
 
 void arena::setRefreshMap(bool value){
@@ -84,6 +85,7 @@ void arena::moveAll(){
 }
 
 void arena::drawAll(myApplication& app){
+    moveAll();
     checkMap();
     updateMap(app);
     app.getWindow().draw(map_);
@@ -103,6 +105,18 @@ void arena::checkMap(){
         updateFoodCount();
         pac_man_.updateScore();
     }
+    if (arena_food_count_ == 0){
+        level_clear_ = true;
+    }
+}
+
+void arena::setVelocity(myApplication& app, const std::string& direction){
+    pac_man_.setVelocity(direction);
+    pac_man_.setNewTexture(app, direction);
+}
+
+void arena::killVelocity(const std::string& direction){
+    pac_man_.killVelocity(direction);
 }
 
 pacMan& arena::getPacMan(){
@@ -142,4 +156,8 @@ tileMap& arena::getMap(){
 void arena::updateOffsets(myApplication& app){
     map_.updateWOffset(app);
     map_.updateHOffset(app);
+}
+
+bool arena::getLevelClearStatus(){
+    return level_clear_;
 }

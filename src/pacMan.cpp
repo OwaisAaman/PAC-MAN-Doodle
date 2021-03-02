@@ -31,6 +31,21 @@ void pacMan::resetLives(){
     num_lives_ = 5;
 }
 
+void pacMan::setNewTexture(myApplication& app, const std::string& direction){
+    if (direction == "Up"){
+        setTexture(app, "pacman_up_1");
+    }
+    else if (direction == "Down"){
+        setTexture(app, "pacman_down_1");
+    }
+    else if (direction == "Right"){
+        setTexture(app, "pacman_right_1");
+    }
+    else if (direction == "Left"){
+        setTexture(app, "pacman_left_1");
+    }
+}
+
 const int pacMan::getLivesCount(){
     return num_lives_;
 }

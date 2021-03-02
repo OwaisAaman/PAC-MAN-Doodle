@@ -24,6 +24,7 @@ class myScreen {
         std::string screen_type_;
         sf::Vector2u window_size_; //keeping a copy here to check when to update the screen
         sf::Vector2f scale_;
+        long long score_;
     public:
         myScreen();
         myScreen(std::string, sf::RenderWindow&, sf::Font&, sf::Font&);
@@ -35,7 +36,10 @@ class myScreen {
         void setText(headerText&, const std::string& , const int, sf::Font&, const sf::Color&, const std::string&, const float);
         void renderScreen(const std::string&, myApplication&);
         void drawScreen(myApplication&);
+        void setVelocity(myApplication&, const std::string&);
+        void killVelocity(const std::string&);
         sf::Vector2u& getWindowSize();
+        bool getLevelClearStatus();
 
 };
 
