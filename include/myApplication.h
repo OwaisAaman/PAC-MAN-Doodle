@@ -34,6 +34,7 @@ class myApplication {
         myScreen pre_game_screen_;
         myScreen game_screen_;
         myScreen end_screen_;
+        sf::Sound sound_;
     public:
         myApplication();
         void appInit(const int, const int);
@@ -50,9 +51,12 @@ class myApplication {
         void checkWindowClosed(sf::Event&);
         void checkChangeScreen(sf::Event&);
         void checkPacManVelocity(sf::Event&);
+        void checkPacManVelocity();
+        void updateScores();
         void setMinWindowSize(sf::Vector2u);
         void resetApp();
         void checkLevelClear();
+        void setSound(const std::string&);
         const std::string& getCurrenScreenType(); 
         const int getCurrentLevel();
         sf::Font& getFont(const std::string&);
@@ -65,6 +69,9 @@ class myApplication {
         int getDefaultWindowHeight();
         int getDefaultWindowWidth();
         std::vector <int> getLevel(int);
+        int getScore();
+        int getHighScore();
+        sf::Sound& getSound();
 };
 
 

@@ -22,6 +22,7 @@ void arena::arenaInit(myApplication& app){
     loadAllMovables(app);
     updateFoodCount();
     refresh_map_ = false;
+    level_clear_ = false;
 }
 
 void arena::loadPacMan(myApplication& app){
@@ -86,7 +87,8 @@ void arena::moveAll(){
 
 void arena::drawAll(myApplication& app){
     moveAll();
-    checkMap();
+    pac_man_.updateActiveStatus();
+    checkMap(app);
     updateMap(app);
     app.getWindow().draw(map_);
     app.getWindow().draw(pac_man_.getSprite());
@@ -97,13 +99,14 @@ void arena::drawAll(myApplication& app){
     app.getWindow().draw(enemy_pinky_.getSprite());
 }
 
-void arena::checkMap(){
+void arena::checkMap(myApplication& app){
     int pacman_index = pac_man_.getIndexFromPosition(map_);
     if (arena_map_array_[pacman_index] == 0 && pac_man_.getActiveStatus() == true){
         arena_map_array_[pacman_index] = -1;
         refresh_map_ = true;
         updateFoodCount();
         pac_man_.updateScore();
+        app.getSound().play();
     }
     if (arena_food_count_ == 0){
         level_clear_ = true;

@@ -44,6 +44,9 @@ void myResources::loadAudio(sf::SoundBuffer& buffer_name, const std::string& fil
 
 void myResources::loadAllAudio(){
     loadAudio(welcome_sound_buff_, "../assets/sounds/pacman_beginning.wav");
+    loadAudio(eat_sound_buff_, "../assets/sounds/pacman_eatfruit.wav");
+    loadAudio(die_sound_buff_, "../assets/sounds/pacman_death.wav");
+    loadAudio(interval_sound_buff_, "../assets/sounds/pacman_intermission.wav");
 }
 
 void myResources::loadAllResources(){
@@ -142,5 +145,14 @@ sf::Texture& myResources::getTexture(const std::string& texture_name){
 sf::SoundBuffer& myResources::getAudio(const std::string& audio_name){
     if (audio_name == "welcome_sound_buff"){
         return welcome_sound_buff_;
+    }
+    else if (audio_name == "eat_sound_buff"){
+        return eat_sound_buff_;
+    }
+    else if (audio_name == "die_sound_buff"){
+        return die_sound_buff_;
+    }
+    else if (audio_name == "interval_sound_buff"){
+        return interval_sound_buff_;
     }
 }

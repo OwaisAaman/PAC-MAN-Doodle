@@ -125,6 +125,7 @@ void movable::killVelocity(const std::string& direction){
 }
 
 void movable::killAllVelocity(){
+    
     is_active_ = false;
     right_velocity_ = false;
     left_velocity_ = false;
@@ -134,6 +135,12 @@ void movable::killAllVelocity(){
 
 void movable::setTexture(myApplication& app, const std::string& texture_name){
     sprite_.setTexture(app.getTexture(texture_name));
+}
+
+void movable::updateActiveStatus(){
+    if (right_velocity_ + up_velocity_ + left_velocity_ + down_velocity_ > 0){
+        is_active_ = true;
+    }
 }
 
 bool movable::getActiveStatus(){

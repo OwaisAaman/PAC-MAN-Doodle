@@ -1,10 +1,7 @@
 #include "myApplication.h"
 #include <iostream>
 
-myApplication::myApplication(){
-    score_ = 0;
-    high_score_ = 0;
-}
+myApplication::myApplication(){}
 
 void myApplication::setMinWindowSize(sf::Vector2u size){
     min_window_size_ = size;
@@ -53,7 +50,8 @@ void myApplication::configureWindow(const int screen_width, const int screen_hei
     videomode_.width = screen_width;
     videomode_.height = screen_height;
     window_.create(videomode_, "PAC-MAN");
-    window_.setFramerateLimit(15);
+    window_.setVerticalSyncEnabled(true);
+    window_.setFramerateLimit(30);
     setMinWindowSize(sf::Vector2u(screen_width, screen_height));
 }
 
@@ -76,6 +74,9 @@ void myApplication::appInit(const int width, const int height){
     setCurrentLevel(1);
     loadAllScreens();
     updateWindowOrigin();
+    score_ = 0;
+    high_score_ = 0;
+    setSound("welcome_sound_buff");
 }
 
 void myApplication::drawScreen(){
@@ -101,6 +102,7 @@ void myApplication::drawScreen(){
 
 void myApplication::checkWindowClosed(sf::Event& event){
     if (event.type == sf::Event::Closed){
+        sound_.stop();
         window_.close();
     }
 }
@@ -109,10 +111,14 @@ void myApplication::checkChangeScreen(sf::Event& event){
     if (current_screen_type_ == "welcome" && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
         setCurrentScreenType("pre_game");
         loadScreen(current_screen_type_);
+        setSound("interval_sound_buff");
     }
     else if (current_screen_type_ == "pre_game" && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
         setCurrentScreenType("game");
         loadScreen(current_screen_type_);
+        sound_.stop();
+        sound_.setBuffer(resources_.getAudio("eat_sound_buff"));
+        sound_.setLoop(false);
     }
 }
 
@@ -149,17 +155,66 @@ void myApplication::checkPacManVelocity(sf::Event& event){
     }
 }
 
+void myApplication::checkPacManVelocity(){
+    if (current_screen_type_ == "game"){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+            game_screen_.setVelocity(*this, "Left");
+        }
+        else {
+            game_screen_.killVelocity("Left");
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+            game_screen_.setVelocity(*this, "Up");
+        }
+        else {
+            game_screen_.killVelocity("Up");
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+            game_screen_.setVelocity(*this, "Down");
+        }
+        else {
+            game_screen_.killVelocity("Down");
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+            game_screen_.setVelocity(*this, "Right");
+        }
+        else {
+            game_screen_.killVelocity("Right");
+        }
+    }
+}
+
+void myApplication::setSound(const std::string& buffer_name){
+    sound_.stop();
+    sound_.setBuffer(resources_.getAudio(buffer_name));
+    sound_.setLoop(true);
+    sound_.play();
+}
+
 void myApplication::checkLevelClear(){
     if (current_screen_type_ == "game" && getCurrentScreen().getLevelClearStatus() == true){
         if (current_level_ == max_level_){
             setCurrentScreenType("end");
             loadScreen(current_screen_type_);
+            setSound("end_sound_buff");
         }
         else {
+            updateScores();
             setCurrentLevel(current_level_ + 1);
             setCurrentScreenType("pre_game");
             loadScreen(current_screen_type_);
+            setSound("interval_sound_buff");
         }
+    }
+}
+
+void myApplication::updateScores(){
+    score_ += getCurrentScreen().getScore();
+    if (score_ > high_score_){
+        high_score_ = score_;
     }
 }
 
@@ -170,9 +225,10 @@ void myApplication::runApp(){
         while (window_.pollEvent(event)){
             checkWindowClosed(event);
             checkChangeScreen(event);
-            checkPacManVelocity(event);
-            checkLevelClear();
+            //checkPacManVelocity(event);
         }
+        checkPacManVelocity();
+        checkLevelClear();
         window_.clear();
         updateView();
         getCurrentScreen().updateScreen(*this);
@@ -242,4 +298,16 @@ std::vector <int> myApplication::getLevel(int level){
 
 const int myApplication::getCurrentLevel(){
     return current_level_;
+}
+
+int myApplication::getScore(){
+    return score_;
+}
+
+int myApplication::getHighScore(){
+    return high_score_;
+}
+
+sf::Sound& myApplication::getSound(){
+    return sound_;
 }

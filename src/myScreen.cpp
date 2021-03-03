@@ -68,16 +68,17 @@ void myScreen::renderScreen(const std::string& type, myApplication& app){
         setSprite(app, "welcome_texture", 0.7f, 0.4f);
     }
     else if (type == "pre_game"){
-        setText(middle_row_, "Level " + std::to_string(app.getCurrentLevel()), 40, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.5f);
+        setText(middle_row_, "Level " + std::to_string(app.getCurrentLevel()), 60, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.5f);
+        setText(bottom_row_, "Press ENTER key to begin level", 30, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.9f);
     }
     else if (type == "game"){
         setText(top_row_, "Score", 40, app.getFont("regular_font"), sf::Color::Yellow, "left", 0.01f);
         top_row_.getText().setScale(1, 1);
         top_row_.getText().setPosition(game_arena_.getMap().getWOffset() / 2, (game_arena_.getMap().getHOffset() / 2) - 50);
         
-        setText(top_row_2_, std::to_string(score_), 40, app.getFont("regular_font"), sf::Color::Yellow, "right", 0.01f);
+        setText(top_row_2_, std::to_string(score_ + app.getScore()), 40, app.getFont("regular_font"), sf::Color::Yellow, "right", 0.01f);
         top_row_2_.getText().setScale(1, 1);
-        top_row_2_.getText().setPosition(window_size_.x - (float)game_arena_.getMap().getWOffset() / 2, (game_arena_.getMap().getHOffset() / 2) - 50);
+        top_row_2_.getText().setPosition((float)window_size_.x - (float)game_arena_.getMap().getWOffset() / 2, (game_arena_.getMap().getHOffset() / 2) - 50);
     
         setText(left_row_1_, "Level", 30, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.48f);
         left_row_1_.getText().setPosition(game_arena_.getMap().getWOffset() / 4, 0.48 * window_size_.y);
@@ -88,7 +89,7 @@ void myScreen::renderScreen(const std::string& type, myApplication& app){
         setText(right_row_1_, "HIGH SCORE", 30, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.48f);
         right_row_1_.getText().setPosition(window_size_.x - game_arena_.getMap().getWOffset() / 4, 0.48 * window_size_.y);
 
-        setText(right_row_2_, "SCORE", 30, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.52f);
+        setText(right_row_2_, std::to_string(app.getHighScore()), 30, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.52f);
         right_row_2_.getText().setPosition(window_size_.x - game_arena_.getMap().getWOffset() / 4, 0.52 * window_size_.y);
 
     }
@@ -102,7 +103,7 @@ void myScreen::drawScreen(myApplication& app){
     if (screen_type_ == "game"){
         game_arena_.drawAll(app);
         score_ = game_arena_.getPacMan().getScore();
-        top_row_2_.getText().setString(std::to_string(score_));
+        top_row_2_.getText().setString(std::to_string(score_ + app.getScore()));
     }
     app.getWindow().draw(top_row_.getText());
     app.getWindow().draw(middle_row_.getText());
@@ -113,7 +114,6 @@ void myScreen::drawScreen(myApplication& app){
     app.getWindow().draw(right_row_1_.getText());
     app.getWindow().draw(right_row_2_.getText());
     app.getWindow().draw(sprite_);
-    
 }
 
 void myScreen::setVelocity(myApplication& app, const std::string& direction){
@@ -130,4 +130,8 @@ sf::Vector2u& myScreen::getWindowSize(){
 
 bool myScreen::getLevelClearStatus(){
     return game_arena_.getLevelClearStatus();
+}
+
+int myScreen::getScore(){
+    return score_;
 }

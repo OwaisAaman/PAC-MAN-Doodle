@@ -40,6 +40,7 @@ class myScreen {
         void killVelocity(const std::string&);
         sf::Vector2u& getWindowSize();
         bool getLevelClearStatus();
+        int getScore();
 
 };
 

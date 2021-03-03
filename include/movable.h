@@ -29,6 +29,7 @@ class movable{
         void setTexture(myApplication&, const std::string&);
         void setPosition(sf::Vector2f);
         void killAllVelocity();
+        void updateActiveStatus();
         sf::Vector2f getPosition();
         bool getActiveStatus();
 };

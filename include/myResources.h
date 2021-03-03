@@ -26,6 +26,7 @@ class myResources{
         sf::SoundBuffer end_sound_buff_;
         sf::SoundBuffer eat_sound_buff_;
         sf::SoundBuffer die_sound_buff_;
+        sf::SoundBuffer interval_sound_buff_;
         std::vector <int> level_1_;
         std::vector <int> level_2_;
         std::vector <int> level_3_;

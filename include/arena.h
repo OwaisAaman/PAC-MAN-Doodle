@@ -32,7 +32,7 @@ class arena{
         void updateFoodCount(int);
         void updateMap(myApplication&);
         void refreshMovables(sf::Vector2f&);
-        void checkMap();
+        void checkMap(myApplication&);
         void moveAll();
         void drawAll(myApplication&);
         void setRefreshMap(bool);
