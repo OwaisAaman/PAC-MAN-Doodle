@@ -13,7 +13,6 @@ class arena{
         std::vector <int> arena_map_array_;
         pacMan pac_man_;
         enemy enemy_blinky_;
-        enemy enemy_blue_;
         enemy enemy_clyde_;
         enemy enemy_inky_;
         enemy enemy_pinky_;

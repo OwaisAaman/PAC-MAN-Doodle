@@ -15,7 +15,8 @@ namespace aStar
         bool is_destination;
         bool is_open;
         Node* parent;
-        Node();    
+        Node();
+        int getCost();    
     };
 
     class pathFind{

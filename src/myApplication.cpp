@@ -51,7 +51,7 @@ void myApplication::configureWindow(const int screen_width, const int screen_hei
     videomode_.height = screen_height;
     window_.create(videomode_, "PAC-MAN");
     window_.setVerticalSyncEnabled(true);
-    window_.setFramerateLimit(30);
+    window_.setFramerateLimit(7);
     setMinWindowSize(sf::Vector2u(screen_width, screen_height));
 }
 
@@ -225,7 +225,6 @@ void myApplication::runApp(){
         while (window_.pollEvent(event)){
             checkWindowClosed(event);
             checkChangeScreen(event);
-            //checkPacManVelocity(event);
         }
         checkPacManVelocity();
         checkLevelClear();

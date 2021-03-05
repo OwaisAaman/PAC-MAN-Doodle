@@ -7,6 +7,10 @@ aStar::Node::Node(){
     parent = nullptr;
 }
 
+int aStar::Node::getCost(){
+    return g + h;
+}
+
 aStar::pathFind::pathFind(){}
 
 aStar::Node aStar::pathFind::getNodeFromIndex(int& index, tileMap& map, aStar::Node* source){
@@ -94,20 +98,18 @@ std::vector <int> aStar::pathFind::getPath(int& source, const int destination, t
     std::vector <aStar::Node> open_set;
     std::map <int, aStar::Node*> index_map;
 
+    open_set.reserve((int)map_array.size());
+
     source_index_ = source;
     destination_index_ = destination;
 
-    //std::cout << "the source and destination obtained from the enemy class is " << source_index_ << " " << destination_index_ << std::endl;
+    //std::cout << "the source and destination is " << source << " " << destination << std::endl;
 
     aStar::Node source_node;
     source_node = getNodeFromIndex(source_index_, map, &source_node);
-    source_node.parent = nullptr;
+    source_node.parent = NULL;
     open_set.push_back(source_node);
     index_map[source_node.index] = &(open_set.back());
-    if (source_node.index == -1){
-        std::cout << "created a source node with -1 index " << std::endl;
-    }
-    //std::cout << "the source node address is " << index_map[source_node.index] << std::endl;
 
     auto current_it = open_set.begin();
     while (!open_set.empty()){
@@ -119,9 +121,9 @@ std::vector <int> aStar::pathFind::getPath(int& source, const int destination, t
             if (it->is_open == false){
                 continue;
             }
-            else if (it->g + it->h < min_cost){
+            else if (it->getCost() < min_cost){
                 current_it = it;
-                min_cost = it->g + it->h;
+                min_cost = it->getCost();
                 ++traversed_nodes;
             }
         }
@@ -129,10 +131,8 @@ std::vector <int> aStar::pathFind::getPath(int& source, const int destination, t
         if (current_it->is_destination || traversed_nodes == 0){    //break the loop if all the nodes are closed or the destination in reached
             break;
         }
-        
-        //std::cout << "the source node address is " << &(*current_it) << std::endl;
+
         current_it->is_open = false;
-        //std::cout << "calling neighbors" << std::endl;
         std::vector <int> neighbors;
         neighbors.push_back(getTop(current_it->index, map, map_array));
         neighbors.push_back(getBottom(current_it->index, map, map_array));
@@ -140,10 +140,8 @@ std::vector <int> aStar::pathFind::getPath(int& source, const int destination, t
         neighbors.push_back(getRight(current_it->index, map, map_array));
 
         int cost = current_it->g + 1;
-        
 
         for (int i = 0; i < 4; i++){
-            //std::cout << "the neighbors of " << current_it->index << " are " << neighbors[i] << std::endl;
             if (neighbors[i] == -1 ){   //|| index_map[neighbors[i]]->is_open == false
                 continue;
             }
@@ -152,10 +150,6 @@ std::vector <int> aStar::pathFind::getPath(int& source, const int destination, t
                 new_node = getNodeFromIndex(neighbors[i], map, &(*current_it));
                 open_set.push_back(new_node);
                 index_map[neighbors[i]] = &(open_set.back());
-                //std::cout << "the parent address is " << &(*current_it) << std::endl;
-                if (neighbors[i] == -1){
-                    std::cout << "created a node with -1 index " << std::endl;
-                }
              }
             else if (index_map[neighbors[i]]->is_open == false){
                 continue;
@@ -163,34 +157,22 @@ std::vector <int> aStar::pathFind::getPath(int& source, const int destination, t
             else if (cost < index_map[neighbors[i]]->g){
                 index_map[neighbors[i]]->g = cost;
                 index_map[neighbors[i]]->parent = &(*current_it);
-                //std::cout << "the address is " << index_map[neighbors[i]]->parent << std::endl;
             }
-        }
-
-    }
-
-    for (int i = 0; i < (int)open_set.size(); i++){
-        if (open_set[i].parent == 0){
-            std::cout << "there exists a node with no parent" << std::endl;
-            std::cout << "the index of such node is " << open_set[i].index << std::endl;
         }
     }
 
     std::vector <int> index_path;
     index_path.push_back(current_it->index);
     aStar::Node* current = current_it->parent;
-    while (current != nullptr){
-        //std::cout << "looping to find the path" << std::endl;
+    while (current != NULL){
         index_path.push_back(current->index);
-        //std::cout << current->index << std::endl;
         if (current->index < 0 || current->index >= (int)map_array.size()){
             std::cout << "error" << std::endl;
-            //std::cout << current->index << std::endl;
+            std::cout << current->index << std::endl;
             std::cout << current << std::endl;
         }
         current = current->parent;
     }
-    //std::cout << "the size of the path is " << index_path.size() << std::endl;
 
     return index_path;
 }

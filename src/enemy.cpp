@@ -3,6 +3,7 @@
 #include "aStar.h"
 #include <iostream>
 #include "myApplication.h"
+#include <thread> 
 
 enemy::enemy(){}
 
@@ -80,6 +81,17 @@ void enemy::getVelocityFromIndex(int source, int destination){
     is_active_ = true;
 }
 
+void enemy::callAstar(tileMap& tile_map, std::vector <int>& level){
+    //std::cout << "astar called" << std::endl;
+    setDestination(0, true, level);
+    aStar::pathFind path;
+    std::vector <int> new_path;
+    new_path = path.getPath(path_.back(), destination_, tile_map, level);
+    new_path.pop_back();
+    std::reverse(new_path.begin(), new_path.end());
+    path_.insert(std::end(path_), std::begin(new_path), std::end(new_path));
+}
+
 void enemy::autoMove(tileMap& tile_map, std::vector <int>& level, bool random_move){
     if (random_move){
         this->getRandomVelocity();
@@ -88,24 +100,30 @@ void enemy::autoMove(tileMap& tile_map, std::vector <int>& level, bool random_mo
         }
     }
     else {
-        int temp_dest = path_.back();
-        path_.pop_back();
-        getVelocityFromIndex(source_, temp_dest);
-        move(tile_map, level);
-        setSource(temp_dest);
-        
-        if (path_.size() < 5){
-            setDestination(0, true, level);
-            aStar::pathFind path;
-            std::vector <int> new_path;
-            std::cout << "calling a star for " << source_ << " and " << destination_ << std::endl;
-            new_path = path.getPath(source_, destination_, tile_map, level);
-            std::cout << "the size of the returned path is " << path_.size() << std::endl;
-            path_.insert(std::end(path_), std::begin(new_path), std::end(new_path));
+        //std::cout << "the path is " << std::endl;
+        //log(path_);
+        for (int i = 1; i <= velocity_factor_; i++){
+            int temp_dest = path_.front();
+            path_.erase(path_.begin());
+            getVelocityFromIndex(source_, temp_dest);
+            move(tile_map, level);
+            setSource(temp_dest);
+            
+            if (path_.size() < 20){
+                //std::thread new_thread_(&enemy::callAstar, tile_map, level);
+                callAstar(tile_map, level);
+            }
         }
     }
 }
 
 void enemy::setVelocityFactor(int factor){
     velocity_factor_ = factor;
+}
+
+void enemy::log(const std::vector <int>& level){
+    for (int i = 0; i < (int)level.size(); i++){
+        std::cout << level[i] << " ";
+    }
+    std::cout << std::endl;
 }

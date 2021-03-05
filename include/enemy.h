@@ -3,6 +3,7 @@
 
 #include "movable.h"
 
+
 class myApplication; 
 
 class enemy : public movable{
@@ -11,6 +12,7 @@ class enemy : public movable{
         int source_;
         int destination_;
         std::vector <int> path_;
+        //std::thread new_thread_;
     public:
         enemy();
         enemy(std::vector <int>&, tileMap&, const std::string&, myApplication&, bool, int);
@@ -22,6 +24,8 @@ class enemy : public movable{
         void setVelocityFactor(int);
         void getVelocityFromIndex(int, int);
         void initFirstPath();
+        void callAstar(tileMap&, std::vector <int>&);
+        void log(const std::vector <int>&);
 
 };
 
