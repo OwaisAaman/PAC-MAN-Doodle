@@ -25,14 +25,13 @@ namespace aStar
             int destination_index_;
         public:    
             pathFind();
-            aStar::Node getNodeFromIndex(int&, tileMap&, aStar::Node*);
-            int getDistance(int&, int&, tileMap&);
-            int getTop(int, tileMap&, std::vector <int>&);
-            int getBottom(int, tileMap&, std::vector <int>&);
-            int getRight(int, tileMap&, std::vector <int>&);
-            int getLeft(int, tileMap&, std::vector <int>&);
-            std::vector <int> getPath(int&, int, tileMap&, std::vector <int>&);
-
+            aStar::Node getNodeFromIndex(int&, const tileMap&, aStar::Node*);
+            int getDistance(int&, int&, const tileMap&);
+            int getTop(int, const tileMap&, const std::vector <int>&);
+            int getBottom(int, const tileMap&, const std::vector <int>&);
+            int getRight(int, const tileMap&, const std::vector <int>&);
+            int getLeft(int, const tileMap&, const std::vector <int>&);
+            std::vector <int> getPath(int&, int, const tileMap&, const std::vector <int>&);
     };
 } // namespace aStar
 

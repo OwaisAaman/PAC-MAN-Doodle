@@ -4,11 +4,15 @@
 pacMan::pacMan(){
     score_ = 0;
     num_lives_ = 5;   //do not hard-code this here
+    small_pill_score_ = 5;
+    big_pill_score_ = 50;
 }
 
 pacMan::pacMan(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app, bool random_spawn, int spawn_index) : movable(level, tile_map, "pacman_right_1", app, random_spawn, spawn_index){
     score_ = 0;
     num_lives_ = 5;
+    small_pill_score_ = 5;
+    big_pill_score_ = 50;
 }
 
 void pacMan::updateLives(){
@@ -19,8 +23,13 @@ void pacMan::updateScore(){
     score_ += 5;
 }
 
-void pacMan::updateScore(int add_score){
-    score_ += add_score;
+void pacMan::updateScore(int index){
+    if (index == 0){
+        score_ += small_pill_score_;
+    }
+    else {
+        score_ += big_pill_score_;
+    }
 }
 
 void pacMan::resetScore(){

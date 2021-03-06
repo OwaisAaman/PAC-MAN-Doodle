@@ -13,7 +13,7 @@ int aStar::Node::getCost(){
 
 aStar::pathFind::pathFind(){}
 
-aStar::Node aStar::pathFind::getNodeFromIndex(int& index, tileMap& map, aStar::Node* source){
+aStar::Node aStar::pathFind::getNodeFromIndex(int& index, const tileMap& map, aStar::Node* source){
     aStar::Node node;
     node.parent = source;
     node.index = index;
@@ -40,7 +40,7 @@ aStar::Node aStar::pathFind::getNodeFromIndex(int& index, tileMap& map, aStar::N
     return node;
 }
 
-int aStar::pathFind::getDistance(int& source, int& destination, tileMap& map){
+int aStar::pathFind::getDistance(int& source, int& destination, const tileMap& map){
     int row_s = map.getRow(source);
     int col_s = map.getCol(source, row_s);
 
@@ -50,7 +50,7 @@ int aStar::pathFind::getDistance(int& source, int& destination, tileMap& map){
     return abs(row_s - row_d) + abs(col_s - col_d);
 }
 
-int aStar::pathFind::getTop(int index, tileMap& map, std::vector <int>& map_array){
+int aStar::pathFind::getTop(int index, const tileMap& map, const std::vector <int>& map_array){
     int ans = index - map.getNumTiles().x;
     if (ans >= 0 && map_array[ans] != 1){
         return ans;
@@ -60,7 +60,7 @@ int aStar::pathFind::getTop(int index, tileMap& map, std::vector <int>& map_arra
     }
 }
 
-int aStar::pathFind::getBottom(int index, tileMap& map, std::vector <int>& map_array){
+int aStar::pathFind::getBottom(int index, const tileMap& map, const std::vector <int>& map_array){
     int ans = index + map.getNumTiles().x;
     if (ans < (int) map_array.size() && map_array[ans] != 1){
         return ans;
@@ -70,7 +70,7 @@ int aStar::pathFind::getBottom(int index, tileMap& map, std::vector <int>& map_a
     }
 }
 
-int aStar::pathFind::getLeft(int index, tileMap& map, std::vector <int>& map_array){
+int aStar::pathFind::getLeft(int index, const tileMap& map, const std::vector <int>& map_array){
     int row = map.getRow(index);
     int col = map.getCol(index, row);
     int ans = index - 1;
@@ -82,7 +82,7 @@ int aStar::pathFind::getLeft(int index, tileMap& map, std::vector <int>& map_arr
     }
 }
 
-int aStar::pathFind::getRight(int index, tileMap& map, std::vector <int>& map_array){
+int aStar::pathFind::getRight(int index, const tileMap& map, const std::vector <int>& map_array){
     int row = map.getRow(index);
     int col = map.getCol(index, row);
     int ans = index + 1;
@@ -94,7 +94,7 @@ int aStar::pathFind::getRight(int index, tileMap& map, std::vector <int>& map_ar
     }
 }
 
-std::vector <int> aStar::pathFind::getPath(int& source, const int destination, tileMap& map, std::vector <int>& map_array){
+std::vector <int> aStar::pathFind::getPath(int& source, const int destination, const tileMap& map, const std::vector <int>& map_array){
     std::vector <aStar::Node> open_set;
     std::map <int, aStar::Node*> index_map;
 
@@ -102,8 +102,6 @@ std::vector <int> aStar::pathFind::getPath(int& source, const int destination, t
 
     source_index_ = source;
     destination_index_ = destination;
-
-    //std::cout << "the source and destination is " << source << " " << destination << std::endl;
 
     aStar::Node source_node;
     source_node = getNodeFromIndex(source_index_, map, &source_node);
@@ -142,7 +140,7 @@ std::vector <int> aStar::pathFind::getPath(int& source, const int destination, t
         int cost = current_it->g + 1;
 
         for (int i = 0; i < 4; i++){
-            if (neighbors[i] == -1 ){   //|| index_map[neighbors[i]]->is_open == false
+            if (neighbors[i] == -1 ){   
                 continue;
             }
             else if (index_map[neighbors[i]] == 0){

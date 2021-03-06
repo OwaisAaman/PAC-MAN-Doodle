@@ -87,10 +87,24 @@ void tileMap::loadMap(std::vector <int>& level, sf::Vector2u tile_size, const in
                 quad[2].position = sf::Vector2f((w_offset_ / 2 + (j + 1) * tile_size.x), (h_offset_ / 2 + (i + 1) * tile_size.y));
                 quad[3].position = sf::Vector2f((w_offset_ / 2 + j * tile_size.x), (h_offset_ / 2 + (i + 1) * tile_size.y));
 
-                quad[0].texCoords = sf::Vector2f(1, 1);
-                quad[1].texCoords = sf::Vector2f(16, 1);
-                quad[2].texCoords = sf::Vector2f(16, 16);
-                quad[3].texCoords = sf::Vector2f(1, 16);
+                quad[0].texCoords = sf::Vector2f(0, 0);
+                quad[1].texCoords = sf::Vector2f(17, 0);
+                quad[2].texCoords = sf::Vector2f(17, 17);
+                quad[3].texCoords = sf::Vector2f(0, 17);
+            }
+            else if (level[curr_index] == 2){
+                sf::Vertex* quad = &vertices_[curr_index * 4];
+                quad[0].position = sf::Vector2f((w_offset_ / 2 + j * tile_size.x), (h_offset_ / 2 + i * tile_size.y));
+                quad[1].position = sf::Vector2f((w_offset_ / 2 + (j + 1) * tile_size.x), (h_offset_ / 2 + i * tile_size.y));
+                quad[2].position = sf::Vector2f((w_offset_ / 2 + (j + 1) * tile_size.x), (h_offset_ / 2 + (i + 1) * tile_size.y));
+                quad[3].position = sf::Vector2f((w_offset_ / 2 + j * tile_size.x), (h_offset_ / 2 + (i + 1) * tile_size.y));
+
+                quad[0].texCoords = sf::Vector2f(4, 4);
+                quad[1].texCoords = sf::Vector2f(13, 4);
+                quad[2].texCoords = sf::Vector2f(13, 13);
+                quad[3].texCoords = sf::Vector2f(4, 13);
+                
+                quad[0].color = sf::Color::Red;
             }
         }
     }
@@ -112,18 +126,18 @@ double tileMap::getHOffset(){
 double tileMap::getWOffset(){
     return w_offset_;
 }
-sf::Vector2u tileMap::getTileSize(){
+sf::Vector2u tileMap::getTileSize() const{
     return tile_size_;
 }
 
-sf::Vector2u tileMap::getNumTiles(){
+sf::Vector2u tileMap::getNumTiles() const{
     return num_tiles_;
 }
 
-int tileMap::getRow(int& spawn_index){
+int tileMap::getRow(int& spawn_index) const{
     return spawn_index / num_tiles_.x;
 }
 
-int tileMap::getCol(int& spawn_index, int& row){
+int tileMap::getCol(int& spawn_index, int& row) const{
     return spawn_index - row * num_tiles_.x;
 }

@@ -9,6 +9,8 @@ class pacMan : public movable{
     private :
         long long score_;
         int num_lives_;
+        int small_pill_score_;
+        int big_pill_score_;
     public :
         pacMan();
         pacMan(std::vector <int>&, tileMap&, const std::string&, myApplication&, bool, int);

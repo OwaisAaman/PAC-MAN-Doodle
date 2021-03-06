@@ -6,6 +6,8 @@ arena::arena(){
     map_ = tileMap();
     arena_food_count_ = 0;
     level_clear_ = false;
+    freeze_enemies_ = false;
+    already_frozen_ = false;
 }
 
 void arena::setArenaMapArray(myApplication& app){
@@ -23,6 +25,8 @@ void arena::arenaInit(myApplication& app){
     updateFoodCount();
     refresh_map_ = false;
     level_clear_ = false;
+    freeze_enemies_ = false;
+    already_frozen_ = false;
 }
 
 void arena::loadPacMan(myApplication& app){
@@ -30,10 +34,10 @@ void arena::loadPacMan(myApplication& app){
 }
 
 void arena::loadEnemies(myApplication& app){
-    enemy_blinky_ = enemy(arena_map_array_, map_, "ghost_blinky", app, 1, false, 281);
-    enemy_clyde_ = enemy(arena_map_array_, map_, "ghost_clyde", app, 1, false, 283);
-    enemy_inky_ = enemy(arena_map_array_, map_, "ghost_inky", app, 1, false, 284);
-    enemy_pinky_ = enemy(arena_map_array_, map_, "ghost_pinky", app, 1, false, 285);
+    enemy_blinky_ = enemy(arena_map_array_, map_, "ghost_blinky", app, 1, false, 281, 30);
+    enemy_clyde_ = enemy(arena_map_array_, map_, "ghost_clyde", app, 1, false, 283, 60);
+    //enemy_inky_ = enemy(arena_map_array_, map_, "ghost_inky", app, 1, false, 284);
+    enemy_pinky_ = enemy(arena_map_array_, map_, "ghost_pinky", app, 1, false, 285, 90);
 }
 
 void arena::loadAllMovables(myApplication& app){
@@ -66,7 +70,7 @@ void arena::refreshMovables(sf::Vector2f& delta){
     pac_man_.setPosition(pac_man_.getPosition() + delta);
     enemy_blinky_.setPosition(enemy_blinky_.getPosition() + delta);
     enemy_clyde_.setPosition(enemy_clyde_.getPosition() + delta);
-    enemy_inky_.setPosition(enemy_inky_.getPosition() + delta);
+    //enemy_inky_.setPosition(enemy_inky_.getPosition() + delta);
     enemy_pinky_.setPosition(enemy_pinky_.getPosition() + delta);
 }
 
@@ -78,7 +82,7 @@ void arena::moveAll(){
     pac_man_.move(map_, arena_map_array_);
     enemy_blinky_.autoMove(map_, arena_map_array_, false);
     enemy_clyde_.autoMove(map_, arena_map_array_, false);
-    enemy_inky_.autoMove(map_, arena_map_array_, false);
+    //enemy_inky_.autoMove(map_, arena_map_array_, false);
     enemy_pinky_.autoMove(map_, arena_map_array_, false);
 }
 
@@ -86,22 +90,54 @@ void arena::drawAll(myApplication& app){
     moveAll();
     pac_man_.updateActiveStatus();
     checkMap(app);
+    unfreezeAllEnemies(app);
+    freezeAllEnemies(app);
     updateMap(app);
     app.getWindow().draw(map_);
     app.getWindow().draw(pac_man_.getSprite());
     app.getWindow().draw(enemy_blinky_.getSprite());
     app.getWindow().draw(enemy_clyde_.getSprite());
-    app.getWindow().draw(enemy_inky_.getSprite());
+    //app.getWindow().draw(enemy_inky_.getSprite());
     app.getWindow().draw(enemy_pinky_.getSprite());
+}
+
+void arena::freezeEnemies(const int index){
+    if (index == 2){
+        freeze_enemies_ = true;
+    }
+}
+
+void arena::freezeAllEnemies(myApplication& app){
+    if (freeze_enemies_){
+        enemy_blinky_.freeze(app);
+        enemy_clyde_.freeze(app);
+        enemy_pinky_.freeze(app);
+        already_frozen_ = true;
+        clock_.restart();
+    }
+}
+
+void arena::unfreezeAllEnemies(myApplication& app){
+    if (already_frozen_){
+        sf::Time elapsed_time = clock_.getElapsedTime();
+        if (elapsed_time.asSeconds() >= 4){
+            enemy_blinky_.unfreeze(app, "ghost_blinky");
+            enemy_clyde_.unfreeze(app, "ghost_clyde");
+            enemy_pinky_.unfreeze(app, "ghost_pinky");
+            already_frozen_ = false;
+        }
+    }
 }
 
 void arena::checkMap(myApplication& app){
     int pacman_index = pac_man_.getIndexFromPosition(map_);
-    if (arena_map_array_[pacman_index] == 0 && pac_man_.getActiveStatus() == true){
+    freeze_enemies_ = false;
+    if ((arena_map_array_[pacman_index] == 0 || arena_map_array_[pacman_index] == 2) && pac_man_.getActiveStatus() == true){
+        pac_man_.updateScore(arena_map_array_[pacman_index]);
+        freezeEnemies(arena_map_array_[pacman_index]);
         arena_map_array_[pacman_index] = -1;
         refresh_map_ = true;
         updateFoodCount();
-        pac_man_.updateScore();
         app.getSound().play();
     }
     if (arena_food_count_ == 0){
