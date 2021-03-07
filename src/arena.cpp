@@ -92,7 +92,9 @@ void arena::drawAll(myApplication& app){
     checkMap(app);
     unfreezeAllEnemies(app);
     freezeAllEnemies(app);
+    checkAllCollisions();
     updateMap(app);
+    respawnAllEnemies(app);
     app.getWindow().draw(map_);
     app.getWindow().draw(pac_man_.getSprite());
     app.getWindow().draw(enemy_blinky_.getSprite());
@@ -143,6 +145,50 @@ void arena::checkMap(myApplication& app){
     if (arena_food_count_ == 0){
         level_clear_ = true;
     }
+}
+
+void arena::checkCollision(enemy& enemy_name, int spawn_index){
+    if (enemy_name.getAliveStatus()){
+        int pacman_index = pac_man_.getIndexFromPosition(map_);
+        int enemy_index = enemy_name.getIndexFromPosition(map_);
+        if (pacman_index == enemy_index){
+            if (enemy_name.getFreezeStatus()){
+                killEnemy(enemy_name, spawn_index);
+            }
+            else {
+                killPacMan();
+            }
+        }
+    }
+}
+
+void arena::checkAllCollisions(){
+    if (pac_man_.getAliveStatus()){
+        checkCollision(enemy_blinky_, 281);
+        checkCollision(enemy_clyde_, 283);
+        checkCollision(enemy_pinky_, 285);
+    }
+}
+
+void arena::killEnemy(enemy& enemy_name, int spawn_index){
+    enemy_name.kill(map_, arena_map_array_, spawn_index);
+    pac_man_.updateScore(200);
+}
+
+void arena::killPacMan(){
+
+}
+
+void arena::respawnEnemy(myApplication& app, enemy& enemy_name, const std::string& texture_name, int spawn_index){
+    if (!enemy_name.getAliveStatus() && enemy_name.getReachedSpawnStatus()){
+        enemy_name = enemy(arena_map_array_, map_, texture_name, app, 1, false, spawn_index, 5);
+    }
+}
+
+void arena::respawnAllEnemies(myApplication& app){
+    respawnEnemy(app, enemy_blinky_, "ghost_blinky", 281);
+    respawnEnemy(app, enemy_clyde_, "ghost_clyde", 281);
+    respawnEnemy(app, enemy_pinky_, "ghost_pinky", 281);
 }
 
 void arena::setVelocity(myApplication& app, const std::string& direction){

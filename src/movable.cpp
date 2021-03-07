@@ -22,6 +22,7 @@ movable::movable(std::vector <int>& level, tileMap& tile_map, const std::string&
     up_velocity_ = false;
     down_velocity_ = false;
     is_active_ = false;
+    is_alive_ = true;
 }
 
 int movable::getRandomSpawn(std::vector <int>& level){
@@ -57,8 +58,6 @@ int movable::getIndexFromPosition(tileMap& tile_map){
 
 void movable::move(tileMap& tile_map, std::vector <int>& level){
     int curr_index = this->getIndexFromPosition(tile_map);
-    //if (curr_index > 500 || curr_index < 0){std::cout << "error" << std::endl;}
-
     if (right_velocity_){
         if (level[curr_index + 1] != 1){
             position_ = sf::Vector2f(position_.x + tile_map.getTileSize().x, position_.y);
@@ -145,6 +144,10 @@ void movable::updateActiveStatus(){
 
 bool movable::getActiveStatus(){
     return is_active_;
+}
+
+bool movable::getAliveStatus(){
+    return is_alive_;
 }
 
 sf::Vector2f movable::getPosition(){

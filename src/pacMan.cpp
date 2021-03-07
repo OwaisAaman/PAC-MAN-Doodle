@@ -27,8 +27,11 @@ void pacMan::updateScore(int index){
     if (index == 0){
         score_ += small_pill_score_;
     }
-    else {
+    else if (index == 2){
         score_ += big_pill_score_;
+    }
+    else {
+        score_ += index;
     }
 }
 

@@ -36,6 +36,8 @@ class arena{
         void updateMap(myApplication&);
         void refreshMovables(sf::Vector2f&);
         void checkMap(myApplication&);
+        void checkCollision(enemy&, int);
+        void checkAllCollisions();
         void moveAll();
         void drawAll(myApplication&);
         void setRefreshMap(bool);
@@ -51,6 +53,10 @@ class arena{
         tileMap& getMap();
         int getFoodCount();
         bool getLevelClearStatus();
+        void killPacMan();
+        void killEnemy(enemy&, int);
+        void respawnEnemy(myApplication&, enemy&, const std::string&, int);
+        void respawnAllEnemies(myApplication&);
 };
 
 #endif //ARENA_H

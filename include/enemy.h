@@ -3,7 +3,6 @@
 
 #include "movable.h"
 
-
 class myApplication; 
 
 class enemy : public movable{
@@ -13,6 +12,8 @@ class enemy : public movable{
         int destination_;
         std::vector <int> path_;
         bool is_frozen_;
+        int counter_;
+        bool reached_spawn_;
     public:
         enemy();
         enemy(std::vector <int>&, tileMap&, const std::string&, myApplication&, bool, int, int);
@@ -28,8 +29,9 @@ class enemy : public movable{
         void log(const std::vector <int>&);
         void freeze(myApplication&);
         void unfreeze(myApplication&, const std::string&);
+        void kill(tileMap&, std::vector <int>&, int);
         bool getFreezeStatus();
-
+        bool getReachedSpawnStatus();
 };
 
 #endif //ENEMY_H

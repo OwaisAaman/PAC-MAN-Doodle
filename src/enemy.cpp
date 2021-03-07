@@ -7,6 +7,8 @@
 
 enemy::enemy(){
     is_frozen_ = false;
+    counter_ = 0;
+    reached_spawn_ = false;
 }
 
 enemy::enemy(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app, int factor, bool random_spawn, int spawn_index, int wait_time) : movable(level, tile_map, texture_name, app, random_spawn, spawn_index){
@@ -15,6 +17,8 @@ enemy::enemy(std::vector <int>& level, tileMap& tile_map, const std::string& tex
     setDestination(spawn_index - tile_map.getNumTiles().x, false, level);
     initFirstPath(wait_time);
     is_frozen_ = false;
+    counter_ = 0;
+    reached_spawn_ = false;
 }
 
 
@@ -23,11 +27,13 @@ enemy::enemy(std::vector <int>& level, tileMap& tile_map, const std::string& tex
     setDestination(spawn_index - tile_map.getNumTiles().x, false, level);
     initFirstPath(wait_time);
     is_frozen_ = false;
+    counter_ = 0;
+    reached_spawn_ = false;
 }
 
 void enemy::initFirstPath(int wait_time){
     for (int i = 0; i < wait_time; i++){
-        if ((i % 4) < 2){
+        if (i % 2 == 0){
             path_.push_back(destination_);
         }
         else {
@@ -103,14 +109,33 @@ void enemy::autoMove(tileMap& tile_map, std::vector <int>& level, bool random_mo
         }
     }
     else {
+        if (velocity_factor_ < 1){
+            ++counter_;
+            if (counter_ > 1){
+                int temp_dest = path_.front();
+                path_.erase(path_.begin());
+                getVelocityFromIndex(source_, temp_dest);
+                move(tile_map, level);
+                setSource(temp_dest);
+                
+                if (path_.size() < 20 && is_alive_){
+                    callAstar(tile_map, level);
+                }
+                counter_ = 0;
+            }
+        }
         for (int i = 1; i <= velocity_factor_; i++){
+            if (path_.empty()){
+                reached_spawn_ = true;
+                break;
+            }
             int temp_dest = path_.front();
             path_.erase(path_.begin());
             getVelocityFromIndex(source_, temp_dest);
             move(tile_map, level);
             setSource(temp_dest);
             
-            if (path_.size() < 20){
+            if (path_.size() < 20 && is_alive_){
                 callAstar(tile_map, level);
             }
         }
@@ -118,9 +143,10 @@ void enemy::autoMove(tileMap& tile_map, std::vector <int>& level, bool random_mo
 }
 
 void enemy::freeze(myApplication& app){
-    if (!is_frozen_){
+    if (!is_frozen_ && is_alive_){
         is_frozen_ = true;
         this->sprite_.setTexture(app.getTexture("ghost_blue_ghost"));
+        setVelocityFactor(0);
     }
 }
 
@@ -128,6 +154,23 @@ void enemy::unfreeze(myApplication& app, const std::string& texture_name){
     if (is_frozen_){
         this->sprite_.setTexture(app.getTexture(texture_name));
         is_frozen_ = false;
+        setVelocityFactor(1);
+    }
+}
+
+void enemy::kill(tileMap& map, std::vector <int>& level, int destination){
+    if (is_alive_){
+        is_alive_ = false;
+        is_frozen_ = false;
+        int index = this->getIndexFromPosition(map);
+        setVelocityFactor(2);
+        setDestination(destination, false, level);
+        aStar::pathFind path;
+        std::vector <int> new_path;
+        new_path = path.getPath(index, destination_, map, level);
+        new_path.pop_back();
+        std::reverse(new_path.begin(), new_path.end());
+        path_ = new_path;
     }
 }
 
@@ -140,4 +183,12 @@ void enemy::log(const std::vector <int>& level){
         std::cout << level[i] << " ";
     }
     std::cout << std::endl;
+}
+
+bool enemy::getFreezeStatus(){
+    return is_frozen_;
+}
+
+bool enemy::getReachedSpawnStatus(){
+    return reached_spawn_;
 }

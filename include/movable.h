@@ -16,6 +16,7 @@ class movable{
         bool up_velocity_;
         bool down_velocity_;
         bool is_active_;
+        bool is_alive_;
     public:
         movable();
         movable(std::vector <int>&, tileMap&, const std::string&, myApplication&, bool, int);
@@ -32,6 +33,7 @@ class movable{
         void updateActiveStatus();
         sf::Vector2f getPosition();
         bool getActiveStatus();
+        bool getAliveStatus();
 };
 
 
