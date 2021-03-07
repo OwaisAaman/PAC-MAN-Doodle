@@ -12,6 +12,8 @@ class arena{
     private:
         tileMap map_;
         std::vector <int> arena_map_array_;
+        sf::VertexArray pacman_vertices_;
+        sf::Texture pacman_texture_;
         pacMan pac_man_;
         enemy enemy_blinky_;
         enemy enemy_clyde_;
@@ -31,6 +33,8 @@ class arena{
         void loadEnemies(myApplication&);
         void loadAllMovables(myApplication&);
         void loadArenaMap(myApplication&);
+        void loadPacManVertices();
+        void drawPacManVertices(sf::RenderTarget&);
         void updateFoodCount();
         void updateFoodCount(int);
         void updateMap(myApplication&);
@@ -57,6 +61,7 @@ class arena{
         void killEnemy(enemy&, int);
         void respawnEnemy(myApplication&, enemy&, const std::string&, int);
         void respawnAllEnemies(myApplication&);
+        void updatePacManTiles(myApplication&);
 };
 
 #endif //ARENA_H

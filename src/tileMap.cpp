@@ -30,6 +30,7 @@ void tileMap::mapInit(sf::Vector2u tile_size, const int x_tiles, const int y_til
     updateHOffset(app);
     updateWOffset(app);
     tile_texture_ = app.getTexture("game");
+    tile_texture_.setSmooth(true);
 }
 
 void tileMap::loadWireFrame(sf::Vector2u tile_size, const int x_tiles, const int y_tiles, myApplication& app){

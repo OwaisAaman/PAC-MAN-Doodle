@@ -22,11 +22,14 @@ void arena::arenaInit(myApplication& app){
     setArenaMapArray(app);
     loadArenaMap(app);
     loadAllMovables(app);
+    loadPacManVertices();
     updateFoodCount();
     refresh_map_ = false;
     level_clear_ = false;
     freeze_enemies_ = false;
     already_frozen_ = false;
+    pacman_texture_ = app.getTexture("pacman_right_1");
+    pacman_texture_.setSmooth(true);
 }
 
 void arena::loadPacMan(myApplication& app){
@@ -43,6 +46,35 @@ void arena::loadEnemies(myApplication& app){
 void arena::loadAllMovables(myApplication& app){
     loadPacMan(app);
     loadEnemies(app);
+}
+
+void arena::loadPacManVertices(){
+    int lives = pac_man_.getLivesCount();
+    pacman_vertices_.resize(lives * 4);
+    pacman_vertices_.setPrimitiveType(sf::Quads);
+
+    double start_x = map_.getWOffset() / 2;
+    double start_y = map_.getHOffset() / 2 + map_.getNumTiles().y * map_.getTileSize().y + 5;
+    double offset = 10;
+    
+    for (int i = 0; i < lives; i++){
+        sf::Vertex* quads = &pacman_vertices_[i * 4];
+        quads[0].position = sf::Vector2f((start_x + i * map_.getTileSize().x + i * offset), (start_y));
+        quads[1].position = sf::Vector2f((start_x + (i + 1) * map_.getTileSize().x + i * offset), (start_y));
+        quads[2].position = sf::Vector2f((start_x + (i + 1) * map_.getTileSize().x + i * offset), (start_y + map_.getTileSize().y));
+        quads[3].position = sf::Vector2f((start_x + i * map_.getTileSize().x + i * offset), (start_y + map_.getTileSize().y));
+
+        quads[0].texCoords = sf::Vector2f(0, 0);
+        quads[1].texCoords = sf::Vector2f(16, 0);
+        quads[2].texCoords = sf::Vector2f(16, 16);
+        quads[3].texCoords = sf::Vector2f(0, 16);
+    }
+}
+
+void arena::drawPacManVertices(sf::RenderTarget& target){
+    sf::RenderStates states;
+    states.texture = &pacman_texture_;
+    target.draw(pacman_vertices_, states);
 }
 
 void arena::updateFoodCount(){
@@ -62,6 +94,7 @@ void arena::updateFoodCount(int number){
 void arena::updateMap(myApplication& app){
     if (refresh_map_){
         loadArenaMap(app);
+        loadPacManVertices();
         refresh_map_ = false;
     }
 }
@@ -96,6 +129,7 @@ void arena::drawAll(myApplication& app){
     updateMap(app);
     respawnAllEnemies(app);
     app.getWindow().draw(map_);
+    drawPacManVertices(app.getWindow());
     app.getWindow().draw(pac_man_.getSprite());
     app.getWindow().draw(enemy_blinky_.getSprite());
     app.getWindow().draw(enemy_clyde_.getSprite());
@@ -197,6 +231,10 @@ void arena::respawnAllEnemies(myApplication& app){
     respawnEnemy(app, enemy_blinky_, "ghost_blinky", 281);
     respawnEnemy(app, enemy_clyde_, "ghost_clyde", 281);
     respawnEnemy(app, enemy_pinky_, "ghost_pinky", 281);
+}
+
+void arena::updatePacManTiles(myApplication& app){
+
 }
 
 void arena::setVelocity(myApplication& app, const std::string& direction){
