@@ -77,6 +77,7 @@ void myApplication::appInit(const int width, const int height){
     score_ = 0;
     high_score_ = 0;
     setSound("welcome_sound_buff");
+    wait_ = false;
 }
 
 void myApplication::drawScreen(){
@@ -218,6 +219,15 @@ void myApplication::updateScores(){
     }
 }
 
+void myApplication::checkWindowFocus(sf::Event& event){
+    if (event.type == sf::Event::LostFocus){
+        wait_ = true;
+    }
+    if (event.type == sf::Event::GainedFocus){
+        wait_ = false;
+    }
+}
+
 void myApplication::runApp(){
     appInit(1200, 900);
     while (window_.isOpen()){
@@ -225,14 +235,17 @@ void myApplication::runApp(){
         while (window_.pollEvent(event)){
             checkWindowClosed(event);
             checkChangeScreen(event);
+            checkWindowFocus(event);
         }
-        checkPacManVelocity();
-        checkLevelClear();
-        window_.clear();
-        updateView();
-        getCurrentScreen().updateScreen(*this);
-        drawScreen();
-        window_.display();
+        if (!wait_){
+            checkPacManVelocity();
+            checkLevelClear();
+            window_.clear();
+            updateView();
+            getCurrentScreen().updateScreen(*this);
+            drawScreen();
+            window_.display();
+        }
     }
 }
 

@@ -133,10 +133,17 @@ void arena::unfreezeAllEnemies(myApplication& app){
 
 void arena::checkMap(myApplication& app){
     int pacman_index = pac_man_.getIndexFromPosition(map_);
+    pac_man_.glow("normal");
     freeze_enemies_ = false;
     if ((arena_map_array_[pacman_index] == 0 || arena_map_array_[pacman_index] == 2) && pac_man_.getActiveStatus() == true){
         pac_man_.updateScore(arena_map_array_[pacman_index]);
         freezeEnemies(arena_map_array_[pacman_index]);
+        if (arena_map_array_[pacman_index] == 0){
+            pac_man_.glow("eat_small_pill");
+        }
+        else {
+            pac_man_.glow("eat_big_pill");
+        }
         arena_map_array_[pacman_index] = -1;
         refresh_map_ = true;
         updateFoodCount();
@@ -154,6 +161,7 @@ void arena::checkCollision(enemy& enemy_name, int spawn_index){
         if (pacman_index == enemy_index){
             if (enemy_name.getFreezeStatus()){
                 killEnemy(enemy_name, spawn_index);
+                pac_man_.glow("kill");
             }
             else {
                 killPacMan();
@@ -181,7 +189,7 @@ void arena::killPacMan(){
 
 void arena::respawnEnemy(myApplication& app, enemy& enemy_name, const std::string& texture_name, int spawn_index){
     if (!enemy_name.getAliveStatus() && enemy_name.getReachedSpawnStatus()){
-        enemy_name = enemy(arena_map_array_, map_, texture_name, app, 1, false, spawn_index, 5);
+        enemy_name = enemy(arena_map_array_, map_, texture_name, app, 1, false, spawn_index, 10);
     }
 }
 

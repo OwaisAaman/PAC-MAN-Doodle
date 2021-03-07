@@ -20,6 +20,7 @@ class pacMan : public movable{
         void resetScore();
         void resetLives();
         void setNewTexture(myApplication&, const std::string&);
+        void glow(const std::string& event);
         const long long getScore();
         const int getLivesCount();
 

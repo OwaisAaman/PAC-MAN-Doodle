@@ -1,5 +1,6 @@
 #include "pacMan.h"
 #include "myApplication.h"
+#include <iostream>
 
 pacMan::pacMan(){
     score_ = 0;
@@ -55,6 +56,21 @@ void pacMan::setNewTexture(myApplication& app, const std::string& direction){
     }
     else if (direction == "Left"){
         setTexture(app, "pacman_left_1");
+    }
+}
+
+void pacMan::glow(const std::string& event){
+    if (event == "normal"){
+        this->getSprite().setColor(sf::Color::White);
+    }
+    else if (event == "eat_small_pill"){
+        this->getSprite().setColor(sf::Color::Green);
+    }
+    else if (event == "eat_big_pill"){
+        this->getSprite().setColor(sf::Color::Red);
+    }
+    else if (event == "kill"){
+        this->getSprite().setColor(sf::Color::Red);
     }
 }
 

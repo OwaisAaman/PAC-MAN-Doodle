@@ -35,6 +35,7 @@ class myApplication {
         myScreen game_screen_;
         myScreen end_screen_;
         sf::Sound sound_;
+        bool wait_;
     public:
         myApplication();
         void appInit(const int, const int);
@@ -56,6 +57,7 @@ class myApplication {
         void setMinWindowSize(sf::Vector2u);
         void resetApp();
         void checkLevelClear();
+        void checkWindowFocus(sf::Event&);
         void setSound(const std::string&);
         const std::string& getCurrenScreenType(); 
         const int getCurrentLevel();
