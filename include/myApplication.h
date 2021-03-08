@@ -57,6 +57,7 @@ class myApplication {
         void setMinWindowSize(sf::Vector2u);
         void resetApp();
         void checkLevelClear();
+        void checkGameOver();
         void checkWindowFocus(sf::Event&);
         void setSound(const std::string&);
         const std::string& getCurrenScreenType(); 

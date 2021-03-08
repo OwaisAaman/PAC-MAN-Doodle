@@ -43,7 +43,7 @@ sf::Vector2f movable::getPositionFromIndex(int spawn_index, tileMap& tile_map){
     int row = tile_map.getRow(spawn_index);
     int col = tile_map.getCol(spawn_index, row);
 
-    return sf::Vector2f((w_offset / 2 + col * tile_map.getTileSize().x), (h_offset / 2 + row * tile_map.getTileSize().y));
+    return sf::Vector2f((w_offset / 2 + col * (float)tile_map.getTileSize().x), (h_offset / 2 + row * (float)tile_map.getTileSize().y));
 }
 
 sf::Sprite& movable::getSprite(){
@@ -51,8 +51,8 @@ sf::Sprite& movable::getSprite(){
 }
 
 int movable::getIndexFromPosition(tileMap& tile_map){
-    int row = (int)((position_.y - tile_map.getHOffset() / 2) / tile_map.getTileSize().y);
-    int col = (int)((position_.x - tile_map.getWOffset() / 2) / tile_map.getTileSize().x);
+    int row = (int)((position_.y - tile_map.getHOffset() / 2) / (float)tile_map.getTileSize().y);
+    int col = (int)((position_.x - tile_map.getWOffset() / 2) / (float)tile_map.getTileSize().x);
     return col + row * tile_map.getNumTiles().x;
 }
 
@@ -60,22 +60,22 @@ void movable::move(tileMap& tile_map, std::vector <int>& level){
     int curr_index = this->getIndexFromPosition(tile_map);
     if (right_velocity_){
         if (level[curr_index + 1] != 1){
-            position_ = sf::Vector2f(position_.x + tile_map.getTileSize().x, position_.y);
+            position_ = sf::Vector2f(position_.x + (float)tile_map.getTileSize().x, position_.y);
         }
     }
     else if (left_velocity_){
         if (level[curr_index - 1] != 1){
-            position_ = sf::Vector2f(position_.x - tile_map.getTileSize().x, position_.y);
+            position_ = sf::Vector2f(position_.x - (float)tile_map.getTileSize().x, position_.y);
         }
     }
     else if (up_velocity_){
         if (level[curr_index - tile_map.getNumTiles().x] != 1){
-            position_ = sf::Vector2f(position_.x, position_.y - tile_map.getTileSize().y);
+            position_ = sf::Vector2f(position_.x, position_.y - (float)tile_map.getTileSize().y);
         }
     }
     else if (down_velocity_){
         if (level[curr_index + tile_map.getNumTiles().x] != 1){
-            position_ = sf::Vector2f(position_.x, position_.y + tile_map.getTileSize().y);
+            position_ = sf::Vector2f(position_.x, position_.y + (float)tile_map.getTileSize().y);
         }
     }
 

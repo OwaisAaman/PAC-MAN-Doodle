@@ -8,6 +8,7 @@ arena::arena(){
     level_clear_ = false;
     freeze_enemies_ = false;
     already_frozen_ = false;
+    pacman_lives_ = 5;
 }
 
 void arena::setArenaMapArray(myApplication& app){
@@ -30,6 +31,9 @@ void arena::arenaInit(myApplication& app){
     already_frozen_ = false;
     pacman_texture_ = app.getTexture("pacman_right_1");
     pacman_texture_.setSmooth(true);
+    pacman_dead_.setBuffer(app.getAudio("die_sound_buff"));
+    pacman_lives_ = 2;
+    game_over_ = false;
 }
 
 void arena::loadPacMan(myApplication& app){
@@ -39,7 +43,6 @@ void arena::loadPacMan(myApplication& app){
 void arena::loadEnemies(myApplication& app){
     enemy_blinky_ = enemy(arena_map_array_, map_, "ghost_blinky", app, 1, false, 281, 30);
     enemy_clyde_ = enemy(arena_map_array_, map_, "ghost_clyde", app, 1, false, 283, 60);
-    //enemy_inky_ = enemy(arena_map_array_, map_, "ghost_inky", app, 1, false, 284);
     enemy_pinky_ = enemy(arena_map_array_, map_, "ghost_pinky", app, 1, false, 285, 90);
 }
 
@@ -49,7 +52,7 @@ void arena::loadAllMovables(myApplication& app){
 }
 
 void arena::loadPacManVertices(){
-    int lives = pac_man_.getLivesCount();
+    int lives = pacman_lives_;
     pacman_vertices_.resize(lives * 4);
     pacman_vertices_.setPrimitiveType(sf::Quads);
 
@@ -103,7 +106,6 @@ void arena::refreshMovables(sf::Vector2f& delta){
     pac_man_.setPosition(pac_man_.getPosition() + delta);
     enemy_blinky_.setPosition(enemy_blinky_.getPosition() + delta);
     enemy_clyde_.setPosition(enemy_clyde_.getPosition() + delta);
-    //enemy_inky_.setPosition(enemy_inky_.getPosition() + delta);
     enemy_pinky_.setPosition(enemy_pinky_.getPosition() + delta);
 }
 
@@ -115,7 +117,6 @@ void arena::moveAll(){
     pac_man_.move(map_, arena_map_array_);
     enemy_blinky_.autoMove(map_, arena_map_array_, false);
     enemy_clyde_.autoMove(map_, arena_map_array_, false);
-    //enemy_inky_.autoMove(map_, arena_map_array_, false);
     enemy_pinky_.autoMove(map_, arena_map_array_, false);
 }
 
@@ -126,15 +127,17 @@ void arena::drawAll(myApplication& app){
     unfreezeAllEnemies(app);
     freezeAllEnemies(app);
     checkAllCollisions();
-    updateMap(app);
-    respawnAllEnemies(app);
-    app.getWindow().draw(map_);
-    drawPacManVertices(app.getWindow());
-    app.getWindow().draw(pac_man_.getSprite());
-    app.getWindow().draw(enemy_blinky_.getSprite());
-    app.getWindow().draw(enemy_clyde_.getSprite());
-    //app.getWindow().draw(enemy_inky_.getSprite());
-    app.getWindow().draw(enemy_pinky_.getSprite());
+    if (!game_over_){
+        updateMap(app);
+        respawnAllEnemies(app);
+        respawnAllMovables(app);
+        app.getWindow().draw(map_);
+        drawPacManVertices(app.getWindow());
+        app.getWindow().draw(pac_man_.getSprite());
+        app.getWindow().draw(enemy_blinky_.getSprite());
+        app.getWindow().draw(enemy_clyde_.getSprite());
+        app.getWindow().draw(enemy_pinky_.getSprite());
+    }
 }
 
 void arena::freezeEnemies(const int index){
@@ -156,7 +159,7 @@ void arena::freezeAllEnemies(myApplication& app){
 void arena::unfreezeAllEnemies(myApplication& app){
     if (already_frozen_){
         sf::Time elapsed_time = clock_.getElapsedTime();
-        if (elapsed_time.asSeconds() >= 4){
+        if (elapsed_time.asSeconds() >= 40){
             enemy_blinky_.unfreeze(app, "ghost_blinky");
             enemy_clyde_.unfreeze(app, "ghost_clyde");
             enemy_pinky_.unfreeze(app, "ghost_pinky");
@@ -192,7 +195,7 @@ void arena::checkCollision(enemy& enemy_name, int spawn_index){
     if (enemy_name.getAliveStatus()){
         int pacman_index = pac_man_.getIndexFromPosition(map_);
         int enemy_index = enemy_name.getIndexFromPosition(map_);
-        if (pacman_index == enemy_index){
+        if (pac_man_.getPosition().x == enemy_name.getPosition().x && pac_man_.getPosition().y == enemy_name.getPosition().y){
             if (enemy_name.getFreezeStatus()){
                 killEnemy(enemy_name, spawn_index);
                 pac_man_.glow("kill");
@@ -218,7 +221,16 @@ void arena::killEnemy(enemy& enemy_name, int spawn_index){
 }
 
 void arena::killPacMan(){
-
+    pac_man_.kill();
+    pacman_dead_.play();
+    pacman_lives_--;
+    if (pacman_lives_ < 0){
+        game_over_ = true;
+        pacman_dead_.stop();
+    }
+    else {
+        loadPacManVertices();
+    }
 }
 
 void arena::respawnEnemy(myApplication& app, enemy& enemy_name, const std::string& texture_name, int spawn_index){
@@ -233,8 +245,15 @@ void arena::respawnAllEnemies(myApplication& app){
     respawnEnemy(app, enemy_pinky_, "ghost_pinky", 281);
 }
 
-void arena::updatePacManTiles(myApplication& app){
-
+void arena::respawnAllMovables(myApplication& app){
+    if (!pac_man_.getAliveStatus()){
+        app.getWindow().clear();
+        sf::sleep(sf::seconds(0.01f));
+        pac_man_ = pacMan(arena_map_array_, map_, "pacman_right_1", app, false, 325);
+        enemy_blinky_ = enemy(arena_map_array_, map_, "ghost_blinky", app, 1, false, 281, 25);
+        enemy_clyde_ = enemy(arena_map_array_, map_, "ghost_clyde", app, 1, false, 283, 50);
+        enemy_pinky_ = enemy(arena_map_array_, map_, "ghost_pinky", app, 1, false, 285, 75);
+    }
 }
 
 void arena::setVelocity(myApplication& app, const std::string& direction){
@@ -284,4 +303,8 @@ void arena::updateOffsets(myApplication& app){
 
 bool arena::getLevelClearStatus(){
     return level_clear_;
+}
+
+bool arena::getGameOverStatus(){
+    return game_over_;
 }

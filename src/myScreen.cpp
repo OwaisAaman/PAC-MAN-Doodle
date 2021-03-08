@@ -105,15 +105,17 @@ void myScreen::drawScreen(myApplication& app){
         score_ = game_arena_.getPacMan().getScore();
         top_row_2_.getText().setString(std::to_string(score_ + app.getScore()));
     }
-    app.getWindow().draw(top_row_.getText());
-    app.getWindow().draw(middle_row_.getText());
-    app.getWindow().draw(bottom_row_.getText());
-    app.getWindow().draw(top_row_2_.getText());
-    app.getWindow().draw(left_row_1_.getText());
-    app.getWindow().draw(left_row_2_.getText());
-    app.getWindow().draw(right_row_1_.getText());
-    app.getWindow().draw(right_row_2_.getText());
-    app.getWindow().draw(sprite_);
+    if ((screen_type_ == "game" && !game_arena_.getGameOverStatus()) || screen_type_ != "game"){
+        app.getWindow().draw(top_row_.getText());
+        app.getWindow().draw(middle_row_.getText());
+        app.getWindow().draw(bottom_row_.getText());
+        app.getWindow().draw(top_row_2_.getText());
+        app.getWindow().draw(left_row_1_.getText());
+        app.getWindow().draw(left_row_2_.getText());
+        app.getWindow().draw(right_row_1_.getText());
+        app.getWindow().draw(right_row_2_.getText());
+        app.getWindow().draw(sprite_);
+    }
 }
 
 void myScreen::setVelocity(myApplication& app, const std::string& direction){
@@ -134,4 +136,8 @@ bool myScreen::getLevelClearStatus(){
 
 int myScreen::getScore(){
     return score_;
+}
+
+bool myScreen::getGameOverStatus(){
+    return game_arena_.getGameOverStatus();
 }

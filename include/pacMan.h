@@ -8,7 +8,6 @@ class myApplication;
 class pacMan : public movable{
     private :
         long long score_;
-        int num_lives_;
         int small_pill_score_;
         int big_pill_score_;
     public :
@@ -16,11 +15,10 @@ class pacMan : public movable{
         pacMan(std::vector <int>&, tileMap&, const std::string&, myApplication&, bool, int);
         void updateScore();
         void updateScore(int);
-        void updateLives();
         void resetScore();
-        void resetLives();
         void setNewTexture(myApplication&, const std::string&);
         void glow(const std::string& event);
+        void kill();
         const long long getScore();
         const int getLivesCount();
 

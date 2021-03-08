@@ -5,6 +5,7 @@
 #include "enemy.h"
 #include "tileMap.h"
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 class myApplication;
 
@@ -21,10 +22,13 @@ class arena{
         enemy enemy_pinky_;
         sf::Clock clock_;
         int arena_food_count_;
+        int pacman_lives_;
         bool refresh_map_;
         bool level_clear_;
+        bool game_over_;
         bool freeze_enemies_;
         bool already_frozen_;
+        sf::Sound pacman_dead_;
     public:
         arena();
         void setArenaMapArray(myApplication&);
@@ -32,6 +36,7 @@ class arena{
         void loadPacMan(myApplication&);
         void loadEnemies(myApplication&);
         void loadAllMovables(myApplication&);
+        void respawnAllMovables(myApplication&);
         void loadArenaMap(myApplication&);
         void loadPacManVertices();
         void drawPacManVertices(sf::RenderTarget&);
@@ -57,6 +62,7 @@ class arena{
         tileMap& getMap();
         int getFoodCount();
         bool getLevelClearStatus();
+        bool getGameOverStatus();
         void killPacMan();
         void killEnemy(enemy&, int);
         void respawnEnemy(myApplication&, enemy&, const std::string&, int);

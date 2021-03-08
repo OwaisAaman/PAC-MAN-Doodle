@@ -51,7 +51,7 @@ void myApplication::configureWindow(const int screen_width, const int screen_hei
     videomode_.height = screen_height;
     window_.create(videomode_, "PAC-MAN");
     window_.setVerticalSyncEnabled(true);
-    window_.setFramerateLimit(10);
+    window_.setFramerateLimit(12);
     setMinWindowSize(sf::Vector2u(screen_width, screen_height));
 }
 
@@ -212,6 +212,16 @@ void myApplication::checkLevelClear(){
     }
 }
 
+void myApplication::checkGameOver(){
+    if (current_screen_type_ == "game" && getCurrentScreen().getGameOverStatus() == true){
+        setCurrentScreenType("end");
+        loadScreen(current_screen_type_);
+        std::cout << current_screen_type_ << std::endl;
+        setSound("interval_sound_buff");
+        std::cout << current_screen_type_ << std::endl;
+    }
+}
+
 void myApplication::updateScores(){
     score_ += getCurrentScreen().getScore();
     if (score_ > high_score_){
@@ -237,8 +247,12 @@ void myApplication::runApp(){
             checkChangeScreen(event);
             checkWindowFocus(event);
         }
+        if (wait_){
+            sf::sleep(sf::seconds(0.1f));
+        }
         if (!wait_){
             checkPacManVelocity();
+            checkGameOver();
             checkLevelClear();
             window_.clear();
             updateView();

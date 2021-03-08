@@ -4,20 +4,14 @@
 
 pacMan::pacMan(){
     score_ = 0;
-    num_lives_ = 5;   //do not hard-code this here
     small_pill_score_ = 5;
     big_pill_score_ = 50;
 }
 
 pacMan::pacMan(std::vector <int>& level, tileMap& tile_map, const std::string& texture_name, myApplication& app, bool random_spawn, int spawn_index) : movable(level, tile_map, "pacman_right_1", app, random_spawn, spawn_index){
     score_ = 0;
-    num_lives_ = 5;
     small_pill_score_ = 5;
     big_pill_score_ = 50;
-}
-
-void pacMan::updateLives(){
-    num_lives_--;
 }
 
 void pacMan::updateScore(){
@@ -38,10 +32,6 @@ void pacMan::updateScore(int index){
 
 void pacMan::resetScore(){
     score_ = 0;
-}
-
-void pacMan::resetLives(){
-    num_lives_ = 5;
 }
 
 void pacMan::setNewTexture(myApplication& app, const std::string& direction){
@@ -74,8 +64,9 @@ void pacMan::glow(const std::string& event){
     }
 }
 
-const int pacMan::getLivesCount(){
-    return num_lives_;
+void pacMan::kill(){
+    glow("kill");
+    is_alive_ = false;
 }
 
 const long long pacMan::getScore(){
