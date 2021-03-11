@@ -32,7 +32,7 @@ void arena::arenaInit(myApplication& app){
     pacman_texture_ = app.getTexture("pacman_right_1");
     pacman_texture_.setSmooth(true);
     pacman_dead_.setBuffer(app.getAudio("die_sound_buff"));
-    pacman_lives_ = 2;
+    pacman_lives_ = 5;
     game_over_ = false;
 }
 
@@ -159,7 +159,7 @@ void arena::freezeAllEnemies(myApplication& app){
 void arena::unfreezeAllEnemies(myApplication& app){
     if (already_frozen_){
         sf::Time elapsed_time = clock_.getElapsedTime();
-        if (elapsed_time.asSeconds() >= 40){
+        if (elapsed_time.asSeconds() >= 6){
             enemy_blinky_.unfreeze(app, "ghost_blinky");
             enemy_clyde_.unfreeze(app, "ghost_clyde");
             enemy_pinky_.unfreeze(app, "ghost_pinky");

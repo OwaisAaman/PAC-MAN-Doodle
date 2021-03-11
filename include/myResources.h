@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+//class that will hold all the assests required in the game
+
 class myResources{
     private:
         sf::Font pac_font_;
@@ -35,19 +37,18 @@ class myResources{
 
     public:
         void loadFont(sf::Font&, const std::string&);
-        void loadAllFonts();
         void loadTexture(sf::Texture&, const std::string&);
-        void loadAllTextures();
         void loadAudio(sf::SoundBuffer&, const std::string&);
-        void loadAllAudio();
         void loadLevel(std::vector <int>&, const std::string&);
+        void loadAllFonts();
+        void loadAllTextures();
+        void loadAllAudio();
         void loadAllLevels();
-        std::vector <int> getLevel(int);
+        void loadAllResources();
+        std::vector <int>& getLevel(int);
         sf::Font& getFont(const std::string&);
         sf::Texture& getTexture(const std::string&);
         sf::SoundBuffer& getAudio(const std::string&);
-        void loadAllResources();
-
 };
 
 #endif //MY_RESOURCES_H
