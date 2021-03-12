@@ -45,10 +45,10 @@ class myResources{
         void loadAllAudio();
         void loadAllLevels();
         void loadAllResources();
-        std::vector <int>& getLevel(int);
-        sf::Font& getFont(const std::string&);
-        sf::Texture& getTexture(const std::string&);
-        sf::SoundBuffer& getAudio(const std::string&);
+        const std::vector <int>& getLevel(int) const;
+        const sf::Font& getFont(const std::string&) const;
+        const sf::Texture& getTexture(const std::string&) const;
+        const sf::SoundBuffer& getAudio(const std::string&) const;
 };
 
 #endif //MY_RESOURCES_H

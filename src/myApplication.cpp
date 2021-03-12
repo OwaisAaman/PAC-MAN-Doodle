@@ -267,15 +267,15 @@ void myApplication::resetApp(){
     score_ = 0;
 }
 
-sf::Font& myApplication::getFont(const std::string& font_name){
+const sf::Font& myApplication::getFont(const std::string& font_name){
     return resources_.getFont(font_name);
 }
 
-sf::Texture& myApplication::getTexture(const std::string& texture_name){
+const sf::Texture& myApplication::getTexture(const std::string& texture_name) const{
     return resources_.getTexture(texture_name);
 }
 
-sf::SoundBuffer& myApplication::getAudio(const std::string& audio_name){
+const sf::SoundBuffer& myApplication::getAudio(const std::string& audio_name){
     return resources_.getAudio(audio_name);
 }
 

@@ -120,11 +120,11 @@ sf::VertexArray& tileMap::getVertexMap(){
     return vertices_;
 }
 
-double tileMap::getHOffset(){
+double tileMap::getHOffset() const{
     return h_offset_;
 }
 
-double tileMap::getWOffset(){
+double tileMap::getWOffset() const{
     return w_offset_;
 }
 sf::Vector2u tileMap::getTileSize() const{
@@ -135,10 +135,10 @@ sf::Vector2u tileMap::getNumTiles() const{
     return num_tiles_;
 }
 
-int tileMap::getRow(int& spawn_index) const{
+int tileMap::getRow(const int spawn_index) const{
     return spawn_index / num_tiles_.x;
 }
 
-int tileMap::getCol(int& spawn_index, int& row) const{
+int tileMap::getCol(const int spawn_index, const int row) const{
     return spawn_index - row * num_tiles_.x;
 }

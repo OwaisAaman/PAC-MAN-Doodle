@@ -4,12 +4,13 @@
 #include <SFML/Graphics.hpp>
 #include "tileMap.h"
 
+//base class for pacman and the ghosts
+
 class myApplication;
 
 class movable{
     protected:
         sf::Sprite sprite_;
-        sf::Texture texture_;
         sf::Vector2f position_;
         bool right_velocity_;
         bool left_velocity_;
@@ -19,22 +20,21 @@ class movable{
         bool is_alive_;
     public:
         movable();
-        movable(std::vector <int>&, tileMap&, const std::string&, myApplication&, bool, int);
-        int getRandomSpawn(std::vector <int>&);
-        void move(tileMap&, std::vector <int>&);
-        sf::Vector2f getPositionFromIndex(int, tileMap&);
-        sf::Sprite& getSprite();
-        int getIndexFromPosition(tileMap&);
+        movable(const std::vector <int>&, const tileMap&, const std::string&, const myApplication&, const bool, const int);
+        int getRandomSpawn(const std::vector <int>&);
+        sf::Vector2f getPositionFromIndex(const int, const tileMap&);
+        int getIndexFromPosition(const tileMap&);
         void setVelocity(const std::string&);
+        void move(const tileMap&, const std::vector <int>&);
+        void setPosition(const sf::Vector2f);
         void killVelocity(const std::string&);
-        void setTexture(myApplication&, const std::string&);
-        void setPosition(sf::Vector2f);
         void killAllVelocity();
+        void setTexture(const myApplication&, const std::string&);
         void updateActiveStatus();
+        sf::Sprite& getSprite();
         sf::Vector2f getPosition();
-        bool getActiveStatus();
-        bool getAliveStatus();
+        const bool getActiveStatus();
+        const bool getAliveStatus();
 };
-
 
 #endif //MOVABLE_H

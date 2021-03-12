@@ -72,7 +72,7 @@ void myResources::loadAllResources(){
     this->loadAllLevels();
 }
 
-std::vector <int>& myResources::getLevel(int level){
+const std::vector <int>& myResources::getLevel(int level) const{
     if (level == 1)         {return level_1_;}
     else if (level == 2)    {return level_2_;}
     else if (level == 3)    {return level_3_;}
@@ -80,12 +80,12 @@ std::vector <int>& myResources::getLevel(int level){
     else if (level == 5)    {return level_5_;}
 }
 
-sf::Font& myResources::getFont(const std::string& font_name){
+const sf::Font& myResources::getFont(const std::string& font_name) const{
     if (font_name == "pac_font")            {return pac_font_;}
     else if (font_name == "regular_font")   {return regular_font_;}
 }
 
-sf::Texture& myResources::getTexture(const std::string& texture_name){
+const sf::Texture& myResources::getTexture(const std::string& texture_name) const{
     if (texture_name == "welcome_texture")      {return welcome_texture_;}
     else if (texture_name == "end_texture")     {return end_texture_;}
     else if (texture_name == "pacman_right_1")  {return pacman_right_1_;}
@@ -101,7 +101,7 @@ sf::Texture& myResources::getTexture(const std::string& texture_name){
     else if (texture_name == "game")            {return game_;}
 }
 
-sf::SoundBuffer& myResources::getAudio(const std::string& audio_name){
+const sf::SoundBuffer& myResources::getAudio(const std::string& audio_name) const{
     if (audio_name == "welcome_sound_buff")         {return welcome_sound_buff_;}
     else if (audio_name == "eat_sound_buff")        {return eat_sound_buff_;}
     else if (audio_name == "die_sound_buff")        {return die_sound_buff_;}

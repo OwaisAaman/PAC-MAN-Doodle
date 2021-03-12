@@ -62,9 +62,9 @@ class myApplication {
         void setSound(const std::string&);
         const std::string& getCurrenScreenType(); 
         const int getCurrentLevel();
-        sf::Font& getFont(const std::string&);
-        sf::Texture& getTexture(const std::string&);
-        sf::SoundBuffer& getAudio(const std::string&);
+        const sf::Font& getFont(const std::string&);
+        const sf::Texture& getTexture(const std::string&) const;
+        const sf::SoundBuffer& getAudio(const std::string&);
         sf::RenderWindow& getWindow();
         sf::VideoMode& getVideoMode();
         myScreen& getCurrentScreen();
