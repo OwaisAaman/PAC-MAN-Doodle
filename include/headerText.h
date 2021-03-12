@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+//class for rendering text on the screens
 
 class headerText : public sf::Text{
     private:
@@ -11,9 +12,9 @@ class headerText : public sf::Text{
         std::string current_alignment_;
     public:
         headerText();
-        headerText(const std::string&, const int, sf::Font&, sf::Color&, const std::string&);
+        headerText(const std::string&, const int, const sf::Font&, const sf::Color&, const std::string&);
         void setAlignment(const std::string&);
-        void textCreate(const std::string&, const int, sf::Font&, const sf::Color&, const std::string&);
+        void textCreate(const std::string&, const int, sf::Font&, const sf::Color&, const std::string&) ;
         void updateOrigin();
         sf::Text& getText();
         sf::Vector2f& getOrigin();

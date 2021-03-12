@@ -3,7 +3,7 @@
 
 headerText::headerText(){}
 
-headerText::headerText(const std::string& str, const int text_size, sf::Font& font, sf::Color& color, const std::string& alignment){
+headerText::headerText(const std::string& str, const int text_size, const sf::Font& font, const sf::Color& color, const std::string& alignment){
     text_.setFont(font);
     text_.setFillColor(color);
     text_.setString(str);
@@ -12,16 +12,12 @@ headerText::headerText(const std::string& str, const int text_size, sf::Font& fo
     this->setAlignment(alignment);
 }
 
-void headerText::textCreate(const std::string& str, const int text_size, sf::Font& font, const sf::Color& color, const std::string& alignment){
-    text_.setFont(font);
-    text_.setFillColor(color);
-    text_.setString(str);
-    text_.setCharacterSize(text_size);
-    text_.setScale(1, 1);
-    this->setAlignment(alignment);
+void headerText::textCreate(const std::string& str, const int text_size, sf::Font& font, const sf::Color& color, const std::string& alignment) {
+    *this = headerText(str, text_size, font, color, alignment);
 }
 
 void headerText::setAlignment(const std::string& alignment) {
+    //updates the origin as per the alignment of the text
     sf::FloatRect bounds = text_.getGlobalBounds();
     current_alignment_ = alignment;
 
@@ -37,6 +33,7 @@ void headerText::setAlignment(const std::string& alignment) {
 }
 
 void headerText::updateOrigin(){
+    //method to update the origin when the window is resized
     this->setAlignment(this->current_alignment_);
 }
 
@@ -45,11 +42,8 @@ sf::Text& headerText::getText(){
 }
 
 void headerText::Log(){
-    //std::cout << "The text is " << text_.getString() << std::endl;
-
     std::cout << "The current alignment is " << current_alignment_ << std::endl;
     std::cout << "The bounding boxes are " << text_.getGlobalBounds().left << " " << text_.getGlobalBounds().top 
               << " " << text_.getGlobalBounds().width << " " <<text_.getGlobalBounds().height << std::endl; 
-    std::cout << "The origin is set to " << text_.getOrigin().x << " " << text_.getOrigin().y << std::endl; 
-
+    std::cout << "The origin is set to " << text_.getOrigin().x << " " << text_.getOrigin().y << std::endl;
 }
