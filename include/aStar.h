@@ -31,7 +31,7 @@ namespace aStar
             int getBottom(int, const tileMap&, const std::vector <int>&);
             int getRight(int, const tileMap&, const std::vector <int>&);
             int getLeft(int, const tileMap&, const std::vector <int>&);
-            std::vector <int> getPath(int&, int, const tileMap&, const std::vector <int>&);
+            std::vector <int> getPath(const int, int, const tileMap&, const std::vector <int>&);
     };
 } // namespace aStar
 

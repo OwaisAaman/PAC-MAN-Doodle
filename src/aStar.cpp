@@ -94,7 +94,7 @@ int aStar::pathFind::getRight(int index, const tileMap& map, const std::vector <
     }
 }
 
-std::vector <int> aStar::pathFind::getPath(int& source, const int destination, const tileMap& map, const std::vector <int>& map_array){
+std::vector <int> aStar::pathFind::getPath(const int source, const int destination, const tileMap& map, const std::vector <int>& map_array){
     std::vector <aStar::Node> open_set;
     std::map <int, aStar::Node*> index_map;
 

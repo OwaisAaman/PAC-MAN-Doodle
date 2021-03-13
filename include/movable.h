@@ -10,14 +10,14 @@ class myApplication;
 
 class movable{
     protected:
-        sf::Sprite sprite_;
-        sf::Vector2f position_;
-        bool right_velocity_;
-        bool left_velocity_;
-        bool up_velocity_;
-        bool down_velocity_;
-        bool is_active_;
-        bool is_alive_;
+        sf::Sprite      sprite_;
+        sf::Vector2f    position_;
+        bool            right_velocity_;
+        bool            left_velocity_;
+        bool            up_velocity_;
+        bool            down_velocity_;
+        bool            is_active_;
+        bool            is_alive_;
     public:
         movable();
         movable(const std::vector <int>&, const tileMap&, const std::string&, const myApplication&, const bool, const int);

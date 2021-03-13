@@ -8,7 +8,7 @@
 
 class headerText : public sf::Text{
     private:
-        sf::Text text_;
+        sf::Text    text_;
         std::string current_alignment_;
     public:
         headerText();
