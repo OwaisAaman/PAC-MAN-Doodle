@@ -60,9 +60,9 @@ void myApplication::updateWindowOrigin(){
 }
 
 void myApplication::appInit(const int width, const int height){
-    setDefaultWindow(width, height);
+    this->setDefaultWindow(width, height);
     resources_.loadAllResources();
-    configureWindow(default_window_width_, default_window_height_);
+    this->configureWindow(default_window_width_, default_window_height_);
     max_level_ = 5;
     this->setCurrentScreenType("welcome");
     this->setCurrentLevel(1);
@@ -82,10 +82,10 @@ void myApplication::drawScreen(){
     if (window_.getSize().y < min_window_size_.y){
        window_.setSize(sf::Vector2u(window_.getSize().x, min_window_size_.y));
     }
-    if (current_screen_type_ == "welcome"){welcome_screen_.drawScreen(*this);}
-    else if (current_screen_type_ == "end"){end_screen_.drawScreen(*this);}
-    else if (current_screen_type_ == "pre_game"){pre_game_screen_.drawScreen(*this);}
-    else if (current_screen_type_ == "game"){game_screen_.drawScreen(*this);}
+    if (current_screen_type_ == "welcome")          {welcome_screen_.drawScreen(*this);}
+    else if (current_screen_type_ == "end")         {end_screen_.drawScreen(*this);}
+    else if (current_screen_type_ == "pre_game")    {pre_game_screen_.drawScreen(*this);}
+    else if (current_screen_type_ == "game")        {game_screen_.drawScreen(*this);}
 }
 
 void myApplication::checkWindowClosed(const sf::Event& event){
@@ -107,8 +107,8 @@ void myApplication::checkChangeScreen(const sf::Event& event){
         this->switchScreen("pre_game", "interval_sound_buff");
     }
     else if (current_screen_type_ == "pre_game" && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
-        setCurrentScreenType("game");
-        loadScreen(current_screen_type_);
+        this->setCurrentScreenType("game");
+        this->loadScreen(current_screen_type_);
         sound_.stop();
         sound_.setBuffer(resources_.getAudio("eat_sound_buff"));
         sound_.setLoop(false);
@@ -191,21 +191,21 @@ void myApplication::runApp(){
     while (window_.isOpen()){
         sf::Event event;
         while (window_.pollEvent(event)){
-            checkWindowClosed(event);
-            checkChangeScreen(event);
-            checkWindowFocus(event);
+            this->checkWindowClosed(event);
+            this->checkChangeScreen(event);
+            this->checkWindowFocus(event);
         }
         if (wait_){
             sf::sleep(sf::seconds(0.1f));
         }
         if (!wait_){
-            checkPacManVelocity();
-            checkGameOver();
-            checkLevelClear();
+            this->checkPacManVelocity();
+            this->checkGameOver();
+            this->checkLevelClear();
             window_.clear();
-            updateView();
-            getCurrentScreen().updateScreen(*this);
-            drawScreen();
+            this->updateView();
+            this->getCurrentScreen().updateScreen(*this);
+            this->drawScreen();
             window_.display();
         }
     }

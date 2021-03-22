@@ -8,13 +8,6 @@
 #include <vector>
 #include "tileMap.h"
 
-
-//not using a std::map container as that would require keeping a track of all the keys. 
-//Even if the pre-known keys are added in the comments for referencing, it is possible that a new key might be 
-//filled and might get lost and would require going through the entire code to search for the keys.
-
-//class tileMap;
-
 class myApplication {
     private:
         
@@ -79,6 +72,5 @@ class myApplication {
         int getHighScore();
         sf::Sound& getSound();
 };
-
 
 #endif //MY_APPLICATION_H
