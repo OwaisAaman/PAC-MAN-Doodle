@@ -2,13 +2,17 @@
 #include "myApplication.h"
 
 pacMan::pacMan(){
+    this->initPacMan();
+}
+
+void pacMan::initPacMan(){
     score_ = 0;
     small_pill_score_ = 5;
     big_pill_score_ = 50;
 }
 
 pacMan::pacMan(const std::vector <int>& level, const tileMap& tile_map, const std::string& texture_name, const myApplication& app, const bool random_spawn, const int spawn_index) : movable(level, tile_map, "pacman_right_1", app, random_spawn, spawn_index){
-    *this = pacMan();
+    this->initPacMan();
 }
 
 void pacMan::updateScore(){

@@ -1,6 +1,5 @@
 #include "myScreen.h"
 #include "myApplication.h" 
-#include <iostream>
 #include "arena.h"
 #include <string>
 
@@ -13,7 +12,7 @@ void myScreen::setScreenType(const std::string& type){
     screen_type_ = type;
 }
 
-void myScreen::updateScale(myApplication& app){
+void myScreen::updateScale(const myApplication& app){
     scale_ = {app.getWindow().getSize().x / (float)app.getDefaultWindowWidth(), app.getWindow().getSize().y / (float)app.getDefaultWindowHeight()};
     window_size_ = app.getWindow().getSize();   
 }
@@ -21,9 +20,7 @@ void myScreen::updateScale(myApplication& app){
 void myScreen::screenInit(myApplication& app, const std::string& type){
     setScreenType(type);
     updateScale(app);
-    if (screen_type_ == "game"){
-        game_arena_.arenaInit(app);
-    }
+    if (screen_type_ == "game") {game_arena_.arenaInit(app);}
 }
 
 void myScreen::updateScreen(myApplication& app){
@@ -41,7 +38,7 @@ void myScreen::updateScreen(myApplication& app){
     }
 }
 
-void myScreen::setText(headerText& text_row, const std::string& text, const int font_size, sf::Font& font, 
+void myScreen::setText(headerText& text_row, const std::string& text, const int font_size, const sf::Font& font, 
                       const sf::Color& color, const std::string& alignment, const float y_pos){
     text_row.textCreate(text, font_size, font, color, alignment);
     text_row.getText().setPosition(window_size_.x / 2, window_size_.y / 2);
@@ -49,10 +46,9 @@ void myScreen::setText(headerText& text_row, const std::string& text, const int 
     text_row.getText().setPosition(window_size_.x / 2, y_pos * window_size_.y);
 }
 
-void myScreen::setSprite(myApplication& app, const std::string& texture_name, const float scale_x, const float scale_y){
+void myScreen::setSprite(const myApplication& app, const std::string& texture_name, const float scale_x, const float scale_y){
     sf::Vector2f pre_scale = {scale_x * app.getDefaultWindowWidth() / app.getTexture(texture_name).getSize().x, scale_y * app.getDefaultWindowHeight() / app.getTexture(texture_name).getSize().y};
     sprite_.setScale(1, 1);
-    app.getTexture(texture_name).setSmooth(true);
     sprite_.setTexture(app.getTexture(texture_name));
     sprite_.setOrigin(sprite_.getGlobalBounds().width / 2, sprite_.getGlobalBounds().height / 2);
     sprite_.scale(pre_scale);
@@ -130,7 +126,7 @@ sf::Vector2u& myScreen::getWindowSize(){
     return window_size_;
 }
 
-bool myScreen::getLevelClearStatus(){
+const bool myScreen::getLevelClearStatus(){
     return game_arena_.getLevelClearStatus();
 }
 
@@ -138,6 +134,6 @@ int myScreen::getScore(){
     return score_;
 }
 
-bool myScreen::getGameOverStatus(){
+const bool myScreen::getGameOverStatus(){
     return game_arena_.getGameOverStatus();
 }

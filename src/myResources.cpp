@@ -72,7 +72,7 @@ void myResources::loadAllResources(){
     this->loadAllLevels();
 }
 
-const std::vector <int>& myResources::getLevel(int level) const{
+std::vector <int> myResources::getLevel(int level) const{
     if (level == 1)         {return level_1_;}
     else if (level == 2)    {return level_2_;}
     else if (level == 3)    {return level_3_;}

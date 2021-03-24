@@ -13,6 +13,7 @@ class pacMan : public movable{
     public :
         pacMan();
         pacMan(const std::vector <int>&, const tileMap&, const std::string&, const myApplication&, const bool, const int);
+        void initPacMan();
         void updateScore();
         void updateScore(const int);
         void resetScore();

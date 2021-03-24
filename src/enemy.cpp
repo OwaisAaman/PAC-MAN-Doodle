@@ -4,6 +4,10 @@
 #include "myApplication.h"
 
 enemy::enemy(){
+    this->initEnemy();
+}
+
+void enemy::initEnemy(){
     velocity_factor_ = 1;
     counter_ = 0;
     is_frozen_ = false;
@@ -11,7 +15,7 @@ enemy::enemy(){
 }
 
 enemy::enemy(const std::vector <int>& level, const tileMap& tile_map, const std::string& texture_name, const myApplication& app, const bool random_spawn, const int spawn_index, const int wait_time) : movable(level, tile_map, texture_name, app, random_spawn, spawn_index){
-    *this = enemy();
+    initEnemy();
     this->setSource(spawn_index);
     this->setDestination(spawn_index - tile_map.getNumTiles().x, false, level);
     this->initFirstPath(wait_time);
@@ -71,10 +75,9 @@ void enemy::callAstar(const tileMap& tile_map, const std::vector <int>& level, c
 
 void enemy::traversePath(const tileMap& tile_map, const std::vector <int>& level){
     this->getVelocityFromIndex(source_, path_.front());
-    this->move(tile_map, level);
+    move(tile_map, level);
     this->setSource(path_.front());
     path_.erase(path_.begin());
-    
     if (path_.size() < 20 && is_alive_){
         this->callAstar(tile_map, level, path_.back(), 0, true);
     }
@@ -129,6 +132,7 @@ void enemy::kill(const tileMap& map, const std::vector <int>& level, const int d
         is_frozen_ = false;
         int index = this->getIndexFromPosition(map);
         this->setVelocityFactor(2);
+        path_.resize(0);
         this->callAstar(map, level, index, destination, false);
     }
 }

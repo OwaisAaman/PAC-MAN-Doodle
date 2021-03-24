@@ -16,13 +16,13 @@ class tileMap : public sf::Drawable, sf::Transformable {
         double w_offset_;  //vertical offset for rendering the tilemap on the window
     public:
         tileMap();
-        void loadMap(std::vector <int>&, sf::Vector2u, const int, const int, myApplication&);
-        void loadWireFrame(sf::Vector2u, const int, const int, myApplication&);
-        void updateHOffset(myApplication&);
-        void updateWOffset(myApplication&);
+        void loadMap(std::vector <int>&, sf::Vector2u, const int, const int, const myApplication&);
+        void loadWireFrame(sf::Vector2u, const int, const int, const myApplication&);
+        void updateHOffset(const myApplication&);
+        void updateWOffset(const myApplication&);
         void setTileSize(sf::Vector2u);
         void setNumTiles(const int, const int);
-        void mapInit(sf::Vector2u, const int, const int, myApplication&);
+        void mapInit(sf::Vector2u, const int, const int, const myApplication&);
         void resetVertexMap();
         sf::VertexArray& getVertexMap();
         double getHOffset() const;

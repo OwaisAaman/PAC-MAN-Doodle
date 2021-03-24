@@ -12,7 +12,7 @@ headerText::headerText(const std::string& str, const int text_size, const sf::Fo
     this->setAlignment(alignment);
 }
 
-void headerText::textCreate(const std::string& str, const int text_size, sf::Font& font, const sf::Color& color, const std::string& alignment) {
+void headerText::textCreate(const std::string& str, const int text_size, const sf::Font& font, const sf::Color& color, const std::string& alignment) {
     *this = headerText(str, text_size, font, color, alignment);
 }
 
@@ -21,15 +21,9 @@ void headerText::setAlignment(const std::string& alignment) {
     sf::FloatRect bounds = text_.getGlobalBounds();
     current_alignment_ = alignment;
 
-    if (alignment == "center") {
-        text_.setOrigin(bounds.width / 2, bounds.height / 2);
-    }
-    else if (alignment == "right") {
-        text_.setOrigin(bounds.width, 0);
-    }
-    else if (alignment == "left"){
-        text_.setOrigin(0, 0);
-    }
+    if (alignment == "center")      {text_.setOrigin(bounds.width / 2, bounds.height / 2);}
+    else if (alignment == "right")  {text_.setOrigin(bounds.width, 0);}
+    else if (alignment == "left")   {text_.setOrigin(0, 0);}
 }
 
 void headerText::updateOrigin(){

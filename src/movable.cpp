@@ -1,6 +1,5 @@
 #include "movable.h"
 #include <stdlib.h>  //for random numbers
-#include <iostream>
 #include "myApplication.h"
 
 movable::movable(){}

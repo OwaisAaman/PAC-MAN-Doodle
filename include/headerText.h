@@ -14,7 +14,7 @@ class headerText : public sf::Text{
         headerText();
         headerText(const std::string&, const int, const sf::Font&, const sf::Color&, const std::string&);
         void setAlignment(const std::string&);
-        void textCreate(const std::string&, const int, sf::Font&, const sf::Color&, const std::string&) ;
+        void textCreate(const std::string&, const int, const sf::Font&, const sf::Color&, const std::string&) ;
         void updateOrigin();
         sf::Text& getText();
         sf::Vector2f& getOrigin();

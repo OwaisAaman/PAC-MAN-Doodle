@@ -223,19 +223,23 @@ const sf::Texture& myApplication::getTexture(const std::string& texture_name) co
     return resources_.getTexture(texture_name);
 }
 
-const sf::SoundBuffer& myApplication::getAudio(const std::string& audio_name){
+const sf::SoundBuffer& myApplication::getAudio(const std::string& audio_name) const{
     return resources_.getAudio(audio_name);
 }
 
-sf::RenderWindow& myApplication::getWindow(){
+sf::RenderWindow& myApplication::getWindow() {
     return window_;
 }
 
-sf::VideoMode& myApplication::getVideoMode(){
+const sf::RenderWindow& myApplication::getWindow() const{
+    return window_;
+}
+
+const sf::VideoMode& myApplication::getVideoMode() const{
     return videomode_;
 }
 
-const std::string& myApplication::getCurrenScreenType(){
+const std::string& myApplication::getCurrenScreenType() const{
     return current_screen_type_;
 }
 
@@ -246,31 +250,31 @@ myScreen& myApplication::getCurrentScreen(){
     else if (current_screen_type_ == "game")        {return game_screen_;}
 }
 
-sf::Vector2f& myApplication::getWindowOrigin(){
+const sf::Vector2f& myApplication::getWindowOrigin() const{
     return window_origin_;
 }
 
-int myApplication::getDefaultWindowWidth(){
+const int myApplication::getDefaultWindowWidth() const{
     return default_window_width_;
 }
 
-int myApplication::getDefaultWindowHeight(){
+const int myApplication::getDefaultWindowHeight() const{
     return default_window_height_;
 }
 
-const std::vector <int> myApplication::getLevel(const int level){
+std::vector <int> myApplication::getLevel(const int level) const{
     return resources_.getLevel(level);
 }
 
-const int myApplication::getCurrentLevel(){
+const int myApplication::getCurrentLevel() const{
     return current_level_;
 }
 
-int myApplication::getScore(){
+int myApplication::getScore() const{
     return score_;
 }
 
-int myApplication::getHighScore(){
+int myApplication::getHighScore() const{
     return high_score_;
 }
 

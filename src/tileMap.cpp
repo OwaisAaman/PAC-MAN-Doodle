@@ -8,11 +8,11 @@ tileMap::tileMap() {
     w_offset_ = 0;
 }
 
-void tileMap::updateHOffset(myApplication& app){
+void tileMap::updateHOffset(const myApplication& app){
     h_offset_ = (double)app.getWindow().getSize().y - num_tiles_.y * tile_size_.y;   //reload map
 }
 
-void tileMap::updateWOffset(myApplication& app){
+void tileMap::updateWOffset(const myApplication& app){
     w_offset_ = (double)app.getWindow().getSize().x - num_tiles_.x * tile_size_.x;   //reload map
 }
 
@@ -24,7 +24,7 @@ void tileMap::setNumTiles(const int x_tiles, const int y_tiles){
     num_tiles_ = sf::Vector2u(x_tiles, y_tiles);
 }
 
-void tileMap::mapInit(sf::Vector2u tile_size, const int x_tiles, const int y_tiles, myApplication& app){
+void tileMap::mapInit(sf::Vector2u tile_size, const int x_tiles, const int y_tiles, const myApplication& app){
     setTileSize(tile_size);
     setNumTiles(x_tiles, y_tiles);
     updateHOffset(app);
@@ -33,7 +33,7 @@ void tileMap::mapInit(sf::Vector2u tile_size, const int x_tiles, const int y_til
     tile_texture_.setSmooth(true);
 }
 
-void tileMap::loadWireFrame(sf::Vector2u tile_size, const int x_tiles, const int y_tiles, myApplication& app){
+void tileMap::loadWireFrame(sf::Vector2u tile_size, const int x_tiles, const int y_tiles, const myApplication& app){
     this->mapInit(tile_size, x_tiles, y_tiles, app);
     vertices_.setPrimitiveType(sf::Points);
     vertices_.resize(x_tiles * y_tiles);
@@ -50,7 +50,7 @@ void tileMap::resetVertexMap(){
     vertices_.resize(0);
 }
 
-void tileMap::loadMap(std::vector <int>& level, sf::Vector2u tile_size, const int x_tiles, const int y_tiles, myApplication& app){
+void tileMap::loadMap(std::vector <int>& level, sf::Vector2u tile_size, const int x_tiles, const int y_tiles, const myApplication& app){
     this->mapInit(tile_size, x_tiles, y_tiles, app);
     resetVertexMap();
     vertices_.setPrimitiveType(sf::Quads);

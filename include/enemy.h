@@ -20,6 +20,7 @@ class enemy : public movable{
         enemy();
         enemy(const std::vector <int>&, const tileMap&, const std::string&, const myApplication&, const bool, const int, const int);
         enemy(const std::vector <int>&, const tileMap&, const std::string&, const myApplication&, const int, const bool, const int, const int);
+        void initEnemy();
         void setSource(const int);
         void setDestination(const int, const bool, const std::vector <int>&);
         void getRandomVelocity();  //will randomly set one of the velocity vars to be true and rest others to be false
