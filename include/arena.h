@@ -11,24 +11,25 @@ class myApplication;
 
 class arena{
     private:
-        tileMap map_;
-        std::vector <int> arena_map_array_;
-        sf::VertexArray pacman_vertices_;
-        sf::Texture pacman_texture_;
-        pacMan pac_man_;
-        enemy enemy_blinky_;
-        enemy enemy_clyde_;
-        enemy enemy_inky_;
-        enemy enemy_pinky_;
-        sf::Clock clock_;
-        int arena_food_count_;
-        int pacman_lives_;
-        bool refresh_map_;
-        bool level_clear_;
-        bool game_over_;
-        bool freeze_enemies_;
-        bool already_frozen_;
-        sf::Sound pacman_dead_;
+        tileMap             map_;
+        std::vector <int>   arena_map_array_;
+        sf::VertexArray     pacman_vertices_;
+        sf::Texture         pacman_texture_;
+        pacMan              pac_man_;
+        enemy               enemy_blinky_;
+        enemy               enemy_clyde_;
+        enemy               enemy_inky_;
+        enemy               enemy_pinky_;
+        sf::Clock           clock_;
+        int                 arena_food_count_;
+        int                 pacman_lives_;
+        bool                refresh_map_;
+        bool                level_clear_;
+        bool                game_over_;
+        bool                freeze_enemies_;
+        bool                already_frozen_;
+        sf::Sound           pacman_dead_;
+        sf::Sound           enemy_dead_;
     public:
         arena();
         void setArenaMapArray(myApplication&);

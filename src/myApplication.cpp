@@ -1,5 +1,4 @@
 #include "myApplication.h"
-#include <iostream>
 
 myApplication::myApplication(){}
 
@@ -70,7 +69,7 @@ void myApplication::appInit(const int width, const int height){
     this->updateWindowOrigin();
     score_ = 0;
     high_score_ = 0;
-    this->setSound("welcome_sound_buff");
+    this->setSound("welcome_sound_buff", true, true);
     wait_ = false;
 }
 
@@ -95,10 +94,19 @@ void myApplication::checkWindowClosed(const sf::Event& event){
     }
 }
 
-void myApplication::switchScreen(const std::string& new_screen, const std::string& sound_buffer){
+void myApplication::setSound(const std::string& buffer_name, bool loop_sound, bool play_sound){
+    sound_.stop();
+    sound_.setBuffer(resources_.getAudio(buffer_name));
+    sound_.setLoop(loop_sound);
+    if (play_sound){
+        sound_.play();
+    }
+}
+
+void myApplication::switchScreen(const std::string& new_screen, const std::string& sound_buffer, bool loop_sound = true, bool play_sound = true){
     this->setCurrentScreenType(new_screen);
     this->loadScreen(current_screen_type_);
-    this->setSound(sound_buffer);
+    this->setSound(sound_buffer, loop_sound, play_sound);
 }
 
 void myApplication::checkChangeScreen(const sf::Event& event){
@@ -107,11 +115,7 @@ void myApplication::checkChangeScreen(const sf::Event& event){
         this->switchScreen("pre_game", "interval_sound_buff");
     }
     else if (current_screen_type_ == "pre_game" && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
-        this->setCurrentScreenType("game");
-        this->loadScreen(current_screen_type_);
-        sound_.stop();
-        sound_.setBuffer(resources_.getAudio("eat_sound_buff"));
-        sound_.setLoop(false);
+        this->switchScreen("game", "eat_sound_buff", false, false);        
     }
 }
 
@@ -148,13 +152,6 @@ void myApplication::checkPacManVelocity(){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))    {game_screen_.setVelocity(*this, "Right");}
         else                                                    {game_screen_.killVelocity("Right");}
     }
-}
-
-void myApplication::setSound(const std::string& buffer_name){
-    sound_.stop();
-    sound_.setBuffer(resources_.getAudio(buffer_name));
-    sound_.setLoop(true);
-    sound_.play();
 }
 
 void myApplication::checkLevelClear(){

@@ -32,6 +32,7 @@ void arena::arenaInit(myApplication& app){
     pacman_texture_ = app.getTexture("pacman_right_1");
     pacman_texture_.setSmooth(true);
     pacman_dead_.setBuffer(app.getAudio("die_sound_buff"));
+    enemy_dead_.setBuffer(app.getAudio("die_sound_buff"));
     pacman_lives_ = 5;
     game_over_ = false;
 }
@@ -217,6 +218,7 @@ void arena::checkAllCollisions(){
 
 void arena::killEnemy(enemy& enemy_name, int spawn_index){
     enemy_name.kill(map_, arena_map_array_, spawn_index);
+    enemy_dead_.play();
     pac_man_.updateScore(200);
 }
 

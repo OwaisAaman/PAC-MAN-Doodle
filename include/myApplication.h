@@ -45,7 +45,7 @@ class myApplication {
         void setCurrentLevel(int);
         void runApp();
         void checkWindowClosed(const sf::Event&);
-        void switchScreen(const std::string&, const std::string&);
+        void switchScreen(const std::string&, const std::string&, bool, bool);
         void checkChangeScreen(const sf::Event&);
         void checkPacManVelocity(const sf::Event&);
         void checkPacManVelocity();
@@ -55,7 +55,7 @@ class myApplication {
         void checkLevelClear();
         void checkGameOver();
         void checkWindowFocus(const sf::Event&);
-        void setSound(const std::string&);
+        void setSound(const std::string&, bool, bool);
         const std::string& getCurrenScreenType() const; 
         const int getCurrentLevel() const;
         const sf::Font& getFont(const std::string&);
