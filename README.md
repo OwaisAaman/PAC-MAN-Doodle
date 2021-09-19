@@ -24,5 +24,5 @@ A clone of the classic Pac-Man game written using C++. SFML graphics library is 
 Although it is possible to add a new arena in the current build, the process is not trivial. A simpler solution is WIP.
 
 #### Screenshots from the game:
-
+<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/home.png" width="400" height="300">
 
