@@ -60,7 +60,7 @@ void myScreen::renderScreen(const std::string& type, myApplication& app){
     if (type == "welcome"){
         setText(top_row_, "PAC MAN", 75, app.getFont("pac_font"), sf::Color::Yellow, "center", 0.08f);
         setText(middle_row_, "Press ENTER key to start", 40, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.8f);
-        setText(bottom_row_, "(Written in C++)", 20, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.95f);
+        setText(bottom_row_, "(Written in C++ by agabhi)", 20, app.getFont("regular_font"), sf::Color::Yellow, "center", 0.95f);
         setSprite(app, "welcome_texture", 0.7f, 0.4f);
     }
     else if (type == "pre_game"){
@@ -93,6 +93,10 @@ void myScreen::renderScreen(const std::string& type, myApplication& app){
         setText(middle_row_, "Game Over", 50, app.getFont("pac_font"), sf::Color::Yellow, "center", 0.75f);
         setSprite(app, "end_texture", 0.2f, 0.2f);
     }
+}
+
+void myScreen::updatePacManLives(int count){
+    game_arena_.updatePacManLives(count);
 }
 
 void myScreen::drawScreen(myApplication& app){
@@ -136,4 +140,8 @@ int myScreen::getScore(){
 
 const bool myScreen::getGameOverStatus(){
     return game_arena_.getGameOverStatus();
+}
+
+int myScreen::getPacManLives(){
+    return game_arena_.getPacManLives();
 }

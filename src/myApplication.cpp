@@ -71,6 +71,7 @@ void myApplication::appInit(const int width, const int height){
     high_score_ = 0;
     this->setSound("welcome_sound_buff", true, true);
     wait_ = false;
+    pac_man_lives_ = game_screen_.getPacManLives();
 }
 
 void myApplication::drawScreen(){
@@ -115,7 +116,8 @@ void myApplication::checkChangeScreen(const sf::Event& event){
         this->switchScreen("pre_game", "interval_sound_buff");
     }
     else if (current_screen_type_ == "pre_game" && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
-        this->switchScreen("game", "eat_sound_buff", false, false);        
+        this->switchScreen("game", "eat_sound_buff", false, false);
+        this->game_screen_.updatePacManLives(pac_man_lives_);        
     }
 }
 
@@ -162,6 +164,7 @@ void myApplication::checkLevelClear(){
         else {
             this->updateScores();
             this->setCurrentLevel(current_level_ + 1);
+            this->pac_man_lives_ = game_screen_.getPacManLives();
             this->switchScreen("pre_game", "interval_sound_buff");
         }
     }

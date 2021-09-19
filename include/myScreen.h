@@ -37,11 +37,12 @@ class myScreen {
         void drawScreen(myApplication&);
         void setVelocity(myApplication&, const std::string&);
         void killVelocity(const std::string&);
+        void updatePacManLives(int count);
         sf::Vector2u& getWindowSize();
         const bool getLevelClearStatus();
         const bool getGameOverStatus();
         int getScore();
-
+        int getPacManLives();
 };
 
 #endif // MY_SCREEN_H

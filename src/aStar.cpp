@@ -52,46 +52,30 @@ int aStar::pathFind::getDistance(int& source, int& destination, const tileMap& m
 
 int aStar::pathFind::getTop(int index, const tileMap& map, const std::vector <int>& map_array){
     int ans = index - map.getNumTiles().x;
-    if (ans >= 0 && map_array[ans] != 1){
-        return ans;
-    }
-    else {
-        return -1;
-    }
+    if (ans >= 0 && map_array[ans] != 1)        {return ans;}
+    else                                        {return -1;}
 }
 
 int aStar::pathFind::getBottom(int index, const tileMap& map, const std::vector <int>& map_array){
     int ans = index + map.getNumTiles().x;
-    if (ans < (int) map_array.size() && map_array[ans] != 1){
-        return ans;
-    }
-    else {
-        return -1;
-    }
+    if (ans < (int) map_array.size() && map_array[ans] != 1)    {return ans;}
+    else                                                        {return -1;}
 }
 
 int aStar::pathFind::getLeft(int index, const tileMap& map, const std::vector <int>& map_array){
     int row = map.getRow(index);
     int col = map.getCol(index, row);
     int ans = index - 1;
-    if (col > 0 && map_array[ans] != 1){
-        return ans;
-    }
-    else {
-        return -1;
-    }
+    if (col > 0 && map_array[ans] != 1)     {return ans;}
+    else                                    {return -1;}
 }
 
 int aStar::pathFind::getRight(int index, const tileMap& map, const std::vector <int>& map_array){
     int row = map.getRow(index);
     int col = map.getCol(index, row);
     int ans = index + 1;
-    if (col < map.getNumTiles().x - 1 && map_array[ans] != 1){
-        return ans;
-    }
-    else {
-        return -1;
-    }
+    if (col < map.getNumTiles().x - 1 && map_array[ans] != 1)   {return ans;}
+    else                                                        {return -1;}
 }
 
 std::vector <int> aStar::pathFind::getPath(const int source, const int destination, const tileMap& map, const std::vector <int>& map_array){

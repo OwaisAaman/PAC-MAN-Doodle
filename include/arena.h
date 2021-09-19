@@ -23,6 +23,7 @@ class arena{
         sf::Clock           clock_;
         int                 arena_food_count_;
         int                 pacman_lives_;
+        int                 arena_score_;
         bool                refresh_map_;
         bool                level_clear_;
         bool                game_over_;
@@ -43,6 +44,7 @@ class arena{
         void drawPacManVertices(sf::RenderTarget&);
         void updateFoodCount();
         void updateFoodCount(int);
+        void updatePacManLives(int);
         void updateMap(myApplication&);
         void refreshMovables(sf::Vector2f&);
         void checkMap(myApplication&);
@@ -62,6 +64,7 @@ class arena{
         std::vector <int>& getMapArray();
         tileMap& getMap();
         int getFoodCount();
+        int getPacManLives();
         bool getLevelClearStatus();
         bool getGameOverStatus();
         void killPacMan();

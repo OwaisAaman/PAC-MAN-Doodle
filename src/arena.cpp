@@ -35,6 +35,11 @@ void arena::arenaInit(myApplication& app){
     enemy_dead_.setBuffer(app.getAudio("die_sound_buff"));
     pacman_lives_ = 5;
     game_over_ = false;
+    arena_score_ = 0;
+}
+
+void arena::updatePacManLives(int count){
+    pacman_lives_ = count;
 }
 
 void arena::loadPacMan(myApplication& app){
@@ -233,6 +238,7 @@ void arena::killPacMan(){
     else {
         loadPacManVertices();
     }
+    arena_score_ += pac_man_.getScore();
 }
 
 void arena::respawnEnemy(myApplication& app, enemy& enemy_name, const std::string& texture_name, int spawn_index){
@@ -252,6 +258,7 @@ void arena::respawnAllMovables(myApplication& app){
         app.getWindow().clear();
         sf::sleep(sf::seconds(0.01f));
         pac_man_ = pacMan(arena_map_array_, map_, "pacman_right_1", app, false, 325);
+        pac_man_.updateScore(arena_score_);
         enemy_blinky_ = enemy(arena_map_array_, map_, "ghost_blinky", app, 1, false, 281, 25);
         enemy_clyde_ = enemy(arena_map_array_, map_, "ghost_clyde", app, 1, false, 283, 50);
         enemy_pinky_ = enemy(arena_map_array_, map_, "ghost_pinky", app, 1, false, 285, 75);
@@ -309,4 +316,8 @@ bool arena::getLevelClearStatus(){
 
 bool arena::getGameOverStatus(){
     return game_over_;
+}
+
+int arena::getPacManLives(){
+    return pacman_lives_;
 }

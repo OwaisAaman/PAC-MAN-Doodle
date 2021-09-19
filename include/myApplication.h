@@ -15,6 +15,7 @@ class myApplication {
         int                 default_window_height_;
         int                 current_level_;
         int                 max_level_;
+        int                 pac_man_lives_;
         long long           score_;
         long long           high_score_;
         bool                wait_;
