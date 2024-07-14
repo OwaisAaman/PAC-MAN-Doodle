@@ -1,45 +1,47 @@
-# Pac-Man
+# Pac-Man 
 
-A clone of the classic Pac-Man game written using C++. SFML graphics library is used for graphics rendering and CMAKE is used for building the project. 
+This is a clone of the classic Pac-Man game made with C++. It uses the SFML graphics library for graphics and CMAKE for building.
 
-#### Requirements:
+### Requirements:
 * [SFML](https://www.sfml-dev.org/)
 * CMAKE
-* Compatible compiler for SFML (check download instructions)
+* A compatible compiler for SFML (check download instructions)
 
-#### Steps to build the project:
-* Add SFML to the environment variables or to the project directory
-* If using VS Code, select the compatible build toolkit (for example, mingw for mingw builds)
-* Build the project and execute "PAC-MAN.exe"
+### Building the Project:
+1. **Set Up SFML**: Add SFML to your environment variables or place it in the project directory.
+2. **Select Build Toolkit**: If using VS Code, select a compatible build toolkit (e.g., mingw for mingw builds).
+3. **Build and Run**: Build the project using CMAKE and run the executable "PAC-MAN.exe".
 
-#### Steps to modify arena or map:
-* The game currently has 5 different levels
-* The following notation is used for constructing the map/arena:
-  * -1  ==> empty space
-  * 1   ==> walls
-  * 0   ==> normal pill
-  * 2   ==> large pill
-* Navigate to assets/maps and open the required txt file. Update the map as per the above convention and save the changes.
+### Modifying the Arena or Map:
+The game features 5 different levels. You can customize these levels using the following symbols:
 
-#### Steps to add a new arena/map:
-Although it is possible to add a new arena in the current build, the process is not trivial. A simpler solution is WIP.
+* `-1`  ==> empty space
+* `1`   ==> walls
+* `0`   ==> normal pill
+* `2`   ==> large pill
 
-#### Screenshots from the game:
-<p>
-<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/home.png" width="400" height="300">
-<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/level_1_home.png" width="400" height="300">
- </p>
- <p>
-<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/level_1_1.png" width="400" height="300">
-<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/level_1_2.png" width="400" height="300">
- </p> 
-<p>
-<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/level_1_3.png" width="400" height="300">
-<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/level_2_home.png" width="400" height="300">
- </p>  
-<p>
-<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/level_2_1.png" width="400" height="300">
-<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/level_3_home.png" width="400" height="300">
-  </p>
-<img src="https://github.com/agabhi017/Pac-Man/blob/main/assets/screenshots/game_over.png" width="400" height="300">
+To modify a map:
+1. Navigate to the `assets/maps` directory.
+2. Open the desired text file for the level you want to change.
+3. Edit the file using the symbols above.
+4. Save your changes.
+
+### Adding a New Arena/Map:
+Although adding a new arena is possible, it requires some effort. A more user-friendly method is in progress. For now, follow these steps to add a new map:
+
+1. **Create a New Map File**: In the `assets/maps` directory, create a new text file for your map.
+2. **Define the Map Layout**: Use the symbols `-1`, `1`, `0`, and `2` to design your map.
+3. **Update Game Code**: You will need to update the game code to recognize and load your new map file.
+
+### Additional Information:
+* **Game Controls**: The game uses standard arrow keys for navigation.
+* **Scoring and Lives**: The scoring system is similar to the original Pac-Man game. Collect pills to score points and avoid ghosts to stay alive. You have multiple lives to complete each level.
+* **Ghost Behavior**: The ghosts follow specific patterns to chase the player, making the game challenging and engaging.
+
+### Troubleshooting:
+* **SFML Issues**: Ensure SFML is correctly installed and configured in your environment.
+* **Compilation Errors**: Check that you have selected the correct compiler and that all dependencies are properly linked.
+* **Runtime Errors**: Verify the map files are correctly formatted and located in the right directory.
+
+By following these steps, you can build, modify, and enjoy your Pac-Man clone game.
 
